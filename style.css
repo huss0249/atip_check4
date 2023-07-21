@@ -5,7 +5,10 @@
     /* display: flex; */
     /* flex-direction: column; */
   }
-  
+  .ql {
+
+    width: 50%;
+  }
   .btn {
     /* background: orange; */
     /* border-color: transparent; */
@@ -14,6 +17,8 @@
     /* margin: 0 auto; */
   }
   
-  li label {
+  .label {
     /* background: red; */
+    /* width: 100%; */
+    /* padding: 30px; */
   }
