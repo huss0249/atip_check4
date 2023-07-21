@@ -69,7 +69,7 @@ const qs = [
   $Q.append($submit);
   
   console.log("$Q = ", $Q);
-  console.log(" ");
+//   console.log(" ");
   //========================================================
   
   //========================================================
@@ -99,7 +99,7 @@ const qs = [
     let $s = flag.parentNode.querySelector("span");
     // console.log(flag.value);
     console.log($s);
-    $s.textContent = null;
+    $s.textContent = '';
   };
   
   function selectiveCheck(event) {
