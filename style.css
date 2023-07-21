@@ -1,16 +1,19 @@
 #q {
-    width: 50%;
-    height: 300px;
+    /* width: 50%; */
+    /* height: 300px; */
     background: lightblue;
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
   }
   
   .btn {
-    background: orange;
-    border-color: transparent;
-    padding: 10px 0;
-    width: 50%;
-    margin: 0 auto;
+    /* background: orange; */
+    /* border-color: transparent; */
+    /* padding: 10px 0; */
+    /* width: 50%; */
+    /* margin: 0 auto; */
   }
   
+  li label {
+    /* background: red; */
+  }

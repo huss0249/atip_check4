@@ -37,6 +37,7 @@ const qs = [
   // Define Question Body
   const qL = document.createElement("ul");
   qL.id = "qBody";
+  qL.className = "list-unstyled";
   
   // Document Fragment
   const fr = new DocumentFragment();
@@ -44,16 +45,21 @@ const qs = [
   // Loop Questions
   qs.forEach((q, i, arr) => {
     let qI = document.createElement("li");
-    qI.className = q.q;
+    // qI.className = q.q;
+
+    qI.classList.add('p-2', 'bg-light', 'm-2');
     qI.setAttribute("data-correct", q.correct);
     q.order ? qI.setAttribute("data-order", q.order) : "";
     // li.textContent = q.q;
     // qI.innerHTML = q.q;
     qI.innerHTML = `
-            <input type="checkbox" id="q-${i + 1}" value="${
+
+<!--    <input type="checkbox" id="q-${i + 1}" value="${
       i + 1
     }" name="mycheck" class="check">
-            <label for="q-${i + 1}">${q.q} check ${i + 1}</label>
+    -->
+    <input class="p-3 form-check-input" type="checkbox" value="${i + 1}" aria-label="Checkbox for following text input" id="q-${i + 1}">
+            <label for="q-${i + 1}" class='ms-1 bg-white'>${q.q} check ${i + 1}</label>
     `;
     fr.append(qI);
   });
@@ -65,7 +71,7 @@ const qs = [
   // Define SUBMIT BUTTON
   const $submit = document.createElement("button");
   $submit.textContent = "SUBMIT";
-  $submit.classList.add("btn", "btn-success");
+  $submit.classList.add("btn", "btn-info");
   $Q.append($submit);
   
   console.log("$Q = ", $Q);
