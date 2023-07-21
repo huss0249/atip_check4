@@ -29,64 +29,94 @@ const shuffle = (arr) => {
 
 shuffle(qs);
 
+
 // Get Questions Container
 const $Q = document.querySelector("#q");
+$Q.classList.add('d-flex', 'flex-column')
+
 
 // Add Question head
 const $qHead = document.createElement("p");
 $qHead.id = "qHead";
-$qHead.textContent = "This is the Question body";
+$qHead.classList.add('bg-dark', 'text-light', 'p-3');
+$qHead.innerHTML = `This is the Question Head where the description and instructions of the question will set. <br />
+Here is how: <br />
+Question text can be broken into multiple lines.`;
 $Q.appendChild($qHead);
 
+
 // Define Question Body
+const qB = document.createElement("div");
+qB.id = "qBody";
+qB.classList.add('qb', 'd-flex', 'flex-row', 'gap-2');
+
+
+// Define Question List
 const qL = document.createElement("ul");
-qL.id = "qBody";
-qL.classList.add('ql', "list-unstyled");
-  
+qL.id = "qList";
+qL.classList.add('ql', "list-unstyled", 'd-grid', 'gap-2', 'flex-grow-1');
+
+
 // Document Fragment
 const fr = new DocumentFragment();
-  
+
+
 // Loop Questions
 qs.forEach((q, i, arr) => {
   let qI = document.createElement("li");
-  // qI.className = q.q;
-
-  qI.classList.add('bg-light');
-  qI.setAttribute("data-correct", q.correct);
-  q.order ? qI.setAttribute("data-order", q.order) : "";
-  // li.textContent = q.q;
-  // qI.innerHTML = q.q;
+  qI.classList.add('bg-warning', 'd-flex', 'flex-row', 'gap-2');
+  qI.setAttribute("data-correct", `${q.correct}`);
+  q.order ? qI.setAttribute("data-order", `${q.order}`) : "";
   qI.innerHTML = `
+                  <input
+                    class="p-3 form-check-input flex-shrink-1"
+                    type="checkbox"
+                    value="${i + 1}"
+                    aria-label="Checkbox for following text input"
+                    id="q-${i + 1}"
+                    >
+                  <label
+                    for="q-${i + 1}"
+                    class='ms-1 bg-white flex-grow-1'
+                    >
+                    <div
+                      class="lbl w-100"
+                      >${q.q} check ${i + 1}</div>
+                  </label>
+                `;
 
-<!--    <input type="checkbox" id="q-${i + 1}" value="${
-    i + 1
-  }" name="mycheck" class="check">
-  -->
-  <input class="p-3 form-check-input" type="checkbox" value="${i + 1}" aria-label="Checkbox for following text input" id="q-${i + 1}">
-          <label for="q-${i + 1}" class='ms-1 bg-white'><div class="label">${q.q} check ${i + 1}</div></label>
-  `;
-
-  fr.append(qI);
+  fr.appendChild(qI);
 });
-  
+
+
 // Add Questions
-qL.append(fr);
-$Q.appendChild(qL);
-  
-// Define FEEDBACK AREA
-const $feedback = document.createComment('div')
-$feedback.id = 'feedback'
-$feedback.textContent = 'FEEDBACK HERE'
-$Q.appendChild($feedback);
+qL.appendChild(fr);
+
 
 // Define SUBMIT BUTTON
 const $submit = document.createElement("button");
-$submit.textContent = "SUBMIT";
 $submit.classList.add("btn", "btn-info");
-$Q.append($submit);
+$submit.textContent = "SUBMIT";
+// $submit.innerHTML = `<div class='d-grid'>
+// <button class='btn btn-info' type='button'>SUBMIT</button>
+// </div>`;
+qL.append($submit);
+
+
+qB.appendChild(qL);
+
+
+// Define FEEDBACK AREA
+const $feedback = document.createElement('div')
+$feedback.id = 'feedback'
+$feedback.classList.add('flex-grow-1')
+$feedback.textContent = 'FEEDBACK HERE'
+qB.appendChild($feedback);
+$Q.appendChild(qB);
+
+
 
 console.log("$Q = ", $Q);
-//   console.log(" ");
   //========================================================
   
   //========================================================
