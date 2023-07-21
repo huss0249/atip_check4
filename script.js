@@ -1,68 +1,73 @@
 // Define Questions
 const qs = [
-    { q: "question A", correct: true, order: 1 },
-    { q: "question B", correct: true, order: 2 },
-    { q: "question C", correct: true, order: 3 },
-    { q: "question D", correct: true, order: 4 },
-    { q: "question E", correct: false },
-    { q: "question F", correct: false },
-    { q: "question G", correct: false },
-    { q: "question H", correct: false }
-  ];
+  { q: "question A", correct: true, order: 1 },
+  { q: "question B", correct: true, order: 2 },
+  { q: "question C", correct: true, order: 3 },
+  { q: "question D", correct: true, order: 4 },
+  { q: "question E", correct: false },
+  { q: "question F", correct: false },
+  { q: "question G", correct: false },
+  { q: "question H", correct: false }
+];
   
-  // Define attempts
-  const attempt = 2;
-  
-  // Define Feedback levels
-  const fb1 = "Feedback 1";
-  const fb2 = "Feedback 2";
-  const fb3 = "Feedback 3";
-  //========================================================
-  // Define the shuffle
-  const shuffle = (arr) => {
-    return arr.sort(() => Math.random() - 0.5);
-  };
-  shuffle(qs);
-  
-  // Get Questions Container
-  const $Q = document.querySelector("#q");
-  
-  // Add Question head
-  const $qHead = document.createElement("p");
-  $qHead.id = "qHead";
-  $qHead.textContent = "This is the Question body";
-  // $Q.innerHTML = "<h1>HI</h1>";
-  $Q.appendChild($qHead);
-  
-  // Define Question Body
-  const qL = document.createElement("ul");
-  qL.id = "qBody";
-  qL.className = "list-unstyled";
-  
-  // Document Fragment
-  const fr = new DocumentFragment();
-  
-  // Loop Questions
-  qs.forEach((q, i, arr) => {
-    let qI = document.createElement("li");
-    // qI.className = q.q;
 
-    qI.classList.add('p-2', 'bg-light', 'm-2');
-    qI.setAttribute("data-correct", q.correct);
-    q.order ? qI.setAttribute("data-order", q.order) : "";
-    // li.textContent = q.q;
-    // qI.innerHTML = q.q;
-    qI.innerHTML = `
+// Define attempts
+const attempt = 2;
+
+
+// Define Feedback levels
+const fb1 = "Feedback 1";
+const fb2 = "Feedback 2";
+const fb3 = "Feedback 3";
+
+//========================================================
+
+// Define the shuffle
+const shuffle = (arr) => {
+  return arr.sort(() => Math.random() - 0.5);
+};
+
+shuffle(qs);
+
+// Get Questions Container
+const $Q = document.querySelector("#q");
+
+// Add Question head
+const $qHead = document.createElement("p");
+$qHead.id = "qHead";
+$qHead.textContent = "This is the Question body";
+$Q.appendChild($qHead);
+
+// Define Question Body
+const qL = document.createElement("ul");
+qL.id = "qBody";
+qL.className = "list-unstyled";
+  
+// Document Fragment
+const fr = new DocumentFragment();
+  
+// Loop Questions
+qs.forEach((q, i, arr) => {
+  let qI = document.createElement("li");
+  // qI.className = q.q;
+
+  qI.classList.add('p-2', 'bg-light', 'm-2');
+  qI.setAttribute("data-correct", q.correct);
+  q.order ? qI.setAttribute("data-order", q.order) : "";
+  // li.textContent = q.q;
+  // qI.innerHTML = q.q;
+  qI.innerHTML = `
 
 <!--    <input type="checkbox" id="q-${i + 1}" value="${
-      i + 1
-    }" name="mycheck" class="check">
-    -->
-    <input class="p-3 form-check-input" type="checkbox" value="${i + 1}" aria-label="Checkbox for following text input" id="q-${i + 1}">
-            <label for="q-${i + 1}" class='ms-1 bg-white'>${q.q} check ${i + 1}</label>
-    `;
-    fr.append(qI);
-  });
+    i + 1
+  }" name="mycheck" class="check">
+  -->
+  <input class="p-3 form-check-input" type="checkbox" value="${i + 1}" aria-label="Checkbox for following text input" id="q-${i + 1}">
+          <label for="q-${i + 1}" class='ms-1 bg-white'>${q.q} check ${i + 1}</label>
+  `;
+
+  fr.append(qI);
+});
   
   // Add Questions
   qL.append(fr);
