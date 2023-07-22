@@ -32,55 +32,54 @@ const feedbacks = {
 //========================================================
 // REUSABLE FNs
 //========================================================
+const reuse = {
 
-// Assign Classes
-const setClassList = (el, arr) => {
-  arr.forEach((j) => el.classList.add(j));
-  return el;
+  // Assign Classes
+  setClassList(el, arr) {
+    arr.forEach((j) => el.classList.add(j));
+    return el;
+  },
+
+  // Define Selectors
+  setSelector(selectorRef, newType, newId, classArray) {
+    let newSelector = ''
+    if (selectorRef != undefined || selectorRef != null) {
+      newSelector = document.querySelector(selectorRef)
+      reuse.setClassList(newSelector, classArray)
+    } else {
+      newSelector = document.createElement(newType)
+      newId != undefined || newId != null ? newSelector.id = newId : ''
+      reuse.setClassList(newSelector, classArray)
+    }
+
+    return newSelector;
+  },
+
+  // Define the shuffle
+  shuffle(arr) {
+    return arr.sort(() => Math.random() - 0.5);
+  },
 }
-//========================================================
-
-// Define Selectors
-const setSelector = (selectorRef, newType, newId, classArray) => {
-  let newSelector = ''
-  if (selectorRef != undefined || selectorRef != null) {
-    newSelector = document.querySelector(selectorRef)
-    setClassList(newSelector, classArray)
-  } else {
-    newSelector = document.createElement(newType)
-    newId != undefined || newId != null ? newSelector.id = newId : ''
-    setClassList(newSelector, classArray)
-  }
-
-  return newSelector;
-}
-//========================================================
-
-
-// Define the shuffle
-const shuffle = (arr) => {
-  return arr.sort(() => Math.random() - 0.5);
-};
 //========================================================
 //========================================================
 
 
 const createQuestion = (choices, maxAttempts, rand) => {
-  rand ? shuffle(choices) : ''
+  rand ? reuse.shuffle(choices) : ''
 
   // Get Questions Container
-  const $Q = setSelector("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
+  const $Q = reuse.setSelector("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
 
   // Add Question head
-  const $qHead = setSelector(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
+  const $qHead = reuse.setSelector(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
   $qHead.innerHTML = questionHead;
   $Q.appendChild($qHead);
   
   // Define Question Body
-  const qB = setSelector(null, 'div', 'qBody', ['qb', 'd-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
+  const qB = reuse.setSelector(null, 'div', 'qBody', ['qb', 'd-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
   
   // Define Question List
-  const qL = setSelector(null, 'ul', 'qList', ['ql', "list-unstyled", 'd-grid', 'gap-2', 'flex-grow-1']);
+  const qL = reuse.setSelector(null, 'ul', 'qList', ['ql', "list-unstyled", 'd-grid', 'gap-2', 'flex-grow-1']);
   
   // Document Fragment
   const df = new DocumentFragment();
@@ -88,13 +87,13 @@ const createQuestion = (choices, maxAttempts, rand) => {
   // Loop Questions
   choices.forEach((q, i, arr) => {
     
-    let qI = setSelector(null, 'li', null, ['bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
+    let qI = reuse.setSelector(null, 'li', null, ['bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
     
     qI.setAttribute("data-correct", `${q.correct}`);
     q.order ? qI.setAttribute("data-order", `${q.order}`) : "";
   
     // Create INPUT
-    let $input = setSelector(null, 'input', `q-${i + 1}`, ["p-4", "form-check-input", "flex-shrink-1", "check"])
+    let $input = reuse.setSelector(null, 'input', `q-${i + 1}`, ["p-4", "form-check-input", "flex-shrink-1", "check"])
     $input.type = 'checkbox'
     $input.value = i + 1
     // $input.setAttribute('value', i + 1)
@@ -102,17 +101,17 @@ const createQuestion = (choices, maxAttempts, rand) => {
     qI.appendChild($input)
     
     // Create LABEL
-    let $label = setSelector(null, 'label', null, ['mx-2', 'bg-white', 'flex-grow-1'])
+    let $label = reuse.setSelector(null, 'label', null, ['mx-2', 'bg-white', 'flex-grow-1'])
     $label.setAttribute('for', `q-${i + 1}`)
     
-    let $div = setSelector(null, 'div', null, ['lbl', 'w-100'])
+    let $div = reuse.setSelector(null, 'div', null, ['lbl', 'w-100'])
     $div.textContent = `${q.q} check ${i + 1}`
     $label.appendChild($div)
     
     qI.appendChild($label)
     
     // Create Ordered Number display
-    let $divNum = setSelector(null, 'div', null, ['order', 'rounded-circle'])
+    let $divNum = reuse.setSelector(null, 'div', null, ['order', 'rounded-circle'])
     qI.appendChild($divNum)
 
     df.appendChild(qI);
@@ -129,7 +128,7 @@ const createQuestion = (choices, maxAttempts, rand) => {
     // $submit.classList.add("btn", "btn-info");
     $submit.classList.add('submit', "btn", "btn-info", 'disabled');
   */
-  const $submit = setSelector(null, 'button', 'submit', ['submit', "btn", "btn-info", 'disabled']);
+  const $submit = reuse.setSelector(null, 'button', 'submit', ['submit', "btn", "btn-info", 'disabled']);
   $submit.textContent = "SUBMIT";
   // $submit.innerHTML = `<div class='d-grid'>
   // <button class='btn btn-info' type='button'>SUBMIT</button>
@@ -146,7 +145,7 @@ const createQuestion = (choices, maxAttempts, rand) => {
     $feedback.id = 'feedback'
     $feedback.classList.add('flex-grow-1')
   */
-  const $feedback = setSelector(null, 'div', 'feedback', ['flex-grow-1']);
+  const $feedback = reuse.setSelector(null, 'div', 'feedback', ['flex-grow-1']);
   $feedback.textContent = 'FEEDBACK HERE'
   qB.appendChild($feedback);
   $Q.appendChild(qB);
@@ -170,41 +169,37 @@ createQuestion(choices, maxAttempts, rand = true)
   //========================================================
   
 const checks = document.querySelectorAll(".check");
-  log(checks)
-  // const maxChecked = 2;
+// const maxChecked = 2;
 const maxChecked = choices.filter(w => w.correct === true).length;
-  log(maxChecked)
-  let counted = null;
 
-  
+let counted = null;
 
-  const selectiveCheck = (event) => {
-    // if (this.checked) {
-    //   console.log("Checkbox is checked..");
-    // } else {
-    //   console.log("Checkbox is not checked..");
-    // }
+const selectiveCheck = (event) => {
+  // if (this.checked) {
+  //   console.log("Checkbox is checked..");
+  // } else {
+  //   console.log("Checkbox is not checked..");
+  // }
+
+  let uncheckedChecks = document.querySelectorAll(".check:not(:checked)");
+  uncheckedChecks.forEach((ww) => {
+    clearOrder(ww);
+  });
+    
+  log('uncheckedChecks = ', uncheckedChecks);
   
-    let uncheckedChecks = document.querySelectorAll(".check:not(:checked)");
-    uncheckedChecks.forEach((ww) => {
-      clearOrder(ww);
-    });
-    // console.log(uncheckedChecks);
+  let checkedChecks = document.querySelectorAll(".check:checked");
   
-    let checkedChecks = document.querySelectorAll(".check:checked");
-  
-    counted = checkedChecks.length;
+  counted = checkedChecks.length;
     // if (checkedChecks.length >= maxChecked + 1) return false;
     if (checkedChecks.length > maxChecked) {
       makeOrder(event.target);
       const $submit = document.querySelector(".submit");
-        $submit.classList.remove('disabled')
+      $submit.classList.remove('disabled')
       return false
     }
     // console.log(event.target.value);
   }
-
-
 
   for (let i = 0; i < checks.length; i++) checks[i].onclick = selectiveCheck;
   // for (let i = 0; i < checks.length; i++)
@@ -213,7 +208,7 @@ const maxChecked = choices.filter(w => w.correct === true).length;
   // for (let i = 0; i < checks.length; i++) checks[i].onchange = selectiveCheck;
   
   const makeOrder = (flag) => {
-    console.log(parseInt(flag.value));
+    console.log('make order = ', parseInt(flag.value));
     // let $s = flag.parentNode.querySelector("span");
     // console.log(flag.value);
     // console.log($s);
