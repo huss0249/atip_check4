@@ -30,8 +30,10 @@ const feedbacks = {
   failed: "Feedback 3",
 }
 //========================================================
+// REUSABLE FNs
+//========================================================
 
-
+// Assign Classes
 const setClassList = (el, arr) => {
   log(el)
   arr.forEach((j) => el.classList.add(j));
@@ -39,14 +41,8 @@ const setClassList = (el, arr) => {
 }
 //========================================================
 
-
+// Define Selectors
 const setSelector = (selectorRef, newType, newId, classArray) => {
-  /* 
-  a:  existing ref selector 
-  b:  type of new element
-  c:  id of new element
-  d:  classList to assign
-  */
   let newSelector = ''
   if (selectorRef != undefined || selectorRef != null) {
     newSelector = document.querySelector(selectorRef)
@@ -62,11 +58,11 @@ const setSelector = (selectorRef, newType, newId, classArray) => {
 //========================================================
 
 
-
 // Define the shuffle
 const shuffle = (arr) => {
   return arr.sort(() => Math.random() - 0.5);
 };
+//========================================================
 //========================================================
 
 
@@ -74,60 +70,27 @@ const createQuestion = (choices, maxAttempts, rand) => {
   rand ? shuffle(choices) : ''
 
   // Get Questions Container
-  /* 
-    const $Q = document.querySelector("#q");
-    $Q.classList.add('d-flex', 'flex-column')
-    setClassList($Q, ['d-flex', 'flex-column'])
-  */
   const $Q = setSelector("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
 
-
   // Add Question head
-  /*
-    const $qHead = document.createElement("p");
-    $qHead.id = "qHead";
-    $qHead.classList.add('bg-dark', 'text-light', 'p-3');
-  */
   const $qHead = setSelector(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
-  
-  // $qHead.innerHTML = `This is the Question Head where the description and instructions of the question will set. <br />
-  // Here is how: <br />
-  // Question text can be broken into multiple lines.`;
   $qHead.innerHTML = questionHead;
   $Q.appendChild($qHead);
   
-  
   // Define Question Body
-  /*
-    const qB = document.createElement("div");
-    qB.id = "qBody";
-    qB.classList.add('qb', 'd-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary');
-  */
   const qB = setSelector(null, 'div', 'qBody', ['qb', 'd-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
   
-  
   // Define Question List
-  /*
-    const qL = document.createElement("ul");
-    qL.id = "qList";
-    qL.classList.add('ql', "list-unstyled", 'd-grid', 'gap-2', 'flex-grow-1');
-  */
   const qL = setSelector(null, 'ul', 'qList', ['ql', "list-unstyled", 'd-grid', 'gap-2', 'flex-grow-1']);
   
-  
   // Document Fragment
-  const fr = new DocumentFragment();
-  
+  const df = new DocumentFragment();
 
   // Loop Questions
   choices.forEach((q, i, arr) => {
     
-    /*
-    let qI = document.createElement("li");
-    qI.classList.add('bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between');
-    */
     let qI = setSelector(null, 'li', null, ['bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
-
+    
     qI.setAttribute("data-correct", `${q.correct}`);
     q.order ? qI.setAttribute("data-order", `${q.order}`) : "";
     qI.innerHTML = `
@@ -150,34 +113,43 @@ const createQuestion = (choices, maxAttempts, rand) => {
                     <div class='order position-absolute end-0'></div>
                     -->
                     <div class='order rounded-circle'></div>
-                  `;
-
-    fr.appendChild(qI);
+                    `;
+                    
+    
+    
+    let $input = setSelector(null, 'inpu', `q-${i + 1}`, ["p-4", "form-check-input", "flex-shrink-1", "check"])
+                    df.appendChild(qI);
   });
 
-
+  
   // Add Questions
-  qL.appendChild(fr);
-
-
+  qL.appendChild(df);
+  
+  
   // Define SUBMIT BUTTON
-  const $submit = document.createElement("button");
-  // $submit.classList.add("btn", "btn-info");
-  $submit.classList.add('submit', "btn", "btn-info", 'disabled');
+  /*
+    const $submit = document.createElement("button");
+    // $submit.classList.add("btn", "btn-info");
+    $submit.classList.add('submit', "btn", "btn-info", 'disabled');
+  */
+  const $submit = setSelector(null, 'button', 'submit', ['submit', "btn", "btn-info", 'disabled']);
   $submit.textContent = "SUBMIT";
   // $submit.innerHTML = `<div class='d-grid'>
   // <button class='btn btn-info' type='button'>SUBMIT</button>
   // </div>`;
   qL.append($submit);
-
-
+  
+  
   qB.appendChild(qL);
-
-
+  
+  
   // Define FEEDBACK AREA
-  const $feedback = document.createElement('div')
-  $feedback.id = 'feedback'
-  $feedback.classList.add('flex-grow-1')
+  /*
+    const $feedback = document.createElement('div')
+    $feedback.id = 'feedback'
+    $feedback.classList.add('flex-grow-1')
+  */
+  const $feedback = setSelector(null, 'div', 'feedback', ['flex-grow-1']);
   $feedback.textContent = 'FEEDBACK HERE'
   qB.appendChild($feedback);
   $Q.appendChild(qB);
