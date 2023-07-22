@@ -113,7 +113,7 @@ const createQuestion = (choices, maxAttempts, rand) => {
   // Define SUBMIT BUTTON
   const $submit = document.createElement("button");
   // $submit.classList.add("btn", "btn-info");
-  $submit.classList.add("btn", "btn-info", 'disabled');
+  $submit.classList.add('submit', "btn", "btn-info", 'disabled');
   $submit.textContent = "SUBMIT";
   // $submit.innerHTML = `<div class='d-grid'>
   // <button class='btn btn-info' type='button'>SUBMIT</button>
@@ -156,6 +156,36 @@ const checks = document.querySelectorAll(".check");
 const maxChecked = choices.filter(w => w.correct === true).length;
   log(maxChecked)
   let counted = null;
+
+  
+
+  const selectiveCheck = (event) => {
+    // if (this.checked) {
+    //   console.log("Checkbox is checked..");
+    // } else {
+    //   console.log("Checkbox is not checked..");
+    // }
+  
+    let uncheckedChecks = document.querySelectorAll(".check:not(:checked)");
+    uncheckedChecks.forEach((ww) => {
+      clearOrder(ww);
+    });
+    // console.log(uncheckedChecks);
+  
+    let checkedChecks = document.querySelectorAll(".check:checked");
+  
+    counted = checkedChecks.length;
+    // if (checkedChecks.length >= maxChecked + 1) return false;
+    if (checkedChecks.length > maxChecked) {
+      makeOrder(event.target);
+      const $submit = document.querySelector(".submit");
+        $submit.classList.remove('disabled')
+      return false
+    }
+    // console.log(event.target.value);
+  }
+
+
   
   for (let i = 0; i < checks.length; i++) checks[i].onclick = selectiveCheck;
   // for (let i = 0; i < checks.length; i++)
@@ -181,29 +211,7 @@ const maxChecked = choices.filter(w => w.correct === true).length;
     // $s.textContent = '';
   };
   
-  function selectiveCheck(event) {
-    // if (this.checked) {
-    //   console.log("Checkbox is checked..");
-    // } else {
-    //   console.log("Checkbox is not checked..");
-    // }
   
-    let uncheckedChecks = document.querySelectorAll(".check:not(:checked)");
-    uncheckedChecks.forEach((ww) => {
-      clearOrder(ww);
-    });
-    // console.log(uncheckedChecks);
-  
-    let checkedChecks = document.querySelectorAll(".check:checked");
-  
-    counted = checkedChecks.length;
-    // if (checkedChecks.length >= maxChecked + 1) return false;
-    if (checkedChecks.length >= maxChecked + 1) return false;
-    // console.log(event.target.value);
-    makeOrder(event.target);
-  }
-  
-  const $submitBTN = document.querySelector(".submit");
   //===========================================================================
   // let list = [];
   // document.querySelectorAll('input[name="mycheck"]').forEach(function (box) {
