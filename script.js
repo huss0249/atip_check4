@@ -25,6 +25,12 @@ const choices = [
 // Define max attempts
 const maxAttempts = 3;
 
+const maxChck = choices.filter(w => w.correct === true).length;
+log('maxChck = ', maxChck)
+
+// counter
+let counter = 0;
+
 
 
 // Define Feedback levels
@@ -60,44 +66,64 @@ const reuse = {
     return newSelector;
   },
 
-  
+
   // Define the shuffle
   shuffle(arr) {
     return arr.sort(() => Math.random() - 0.5);
   },
 }
 //========================================================
+
+const checkChange = (e) => {
+  log('event', e.target.closest('li').dataset.correct)
+
+  // if (this.checked) {
+  //   console.log("Checkbox is checked..");
+  // } else {
+  //   console.log("Checkbox is not checked..");
+  // }
+  log('event', e.target.closest('input').checked)
+  e.target.closest('input').checked === true ? counter++ : counter--;
+  counter == maxChck ? $submit.classList.remove('disabled') : log('undone')
+  log(counter)
+}
+
 //========================================================
 
 
 const createQuestion = (choices, maxAttempts, rand) => {
   rand ? reuse.shuffle(choices) : ''
 
+
   // Get Questions Container
   const $Q = reuse.setSelector("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
+
 
   // Add Question head
   const $qHead = reuse.setSelector(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
   $qHead.innerHTML = questionHead;
   $Q.appendChild($qHead);
   
+
   // Define Question Body
   const qB = reuse.setSelector(null, 'div', 'qBody', ['qb', 'd-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
   
+
   // Define Question List
   const qL = reuse.setSelector(null, 'ul', 'qList', ['ql', "list-unstyled", 'd-grid', 'gap-2', 'flex-grow-1']);
   
+
   // Document Fragment
   const df = new DocumentFragment();
 
+
   // Loop Questions
-  choices.forEach((q, i, arr) => {
-    
+  choices.forEach((q, i, arr) => {  
     let qI = reuse.setSelector(null, 'li', null, ['bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
     
     qI.setAttribute("data-correct", `${q.correct}`);
     q.order ? qI.setAttribute("data-order", `${q.order}`) : "";
-  
+
     // Create INPUT
     let $input = reuse.setSelector(null, 'input', `q-${i + 1}`, ["p-4", "form-check-input", "flex-shrink-1", "check"])
     $input.type = 'checkbox'
@@ -105,7 +131,7 @@ const createQuestion = (choices, maxAttempts, rand) => {
     // $input.setAttribute('value', i + 1)
     $input.setAttribute('aria-label', "Checkbox for following text input")
     qI.appendChild($input)
-    
+
     // Create LABEL
     let $label = reuse.setSelector(null, 'label', null, ['mx-2', 'bg-white', 'flex-grow-1'])
     $label.setAttribute('for', `q-${i + 1}`)
@@ -113,9 +139,8 @@ const createQuestion = (choices, maxAttempts, rand) => {
     let $div = reuse.setSelector(null, 'div', null, ['lbl', 'w-100'])
     $div.textContent = `${q.q} check ${i + 1}`
     $label.appendChild($div)
-    
     qI.appendChild($label)
-    
+
     // Create Ordered Number display
     let $divNum = reuse.setSelector(null, 'div', null, ['order', 'rounded-circle'])
     qI.appendChild($divNum)
@@ -123,43 +148,22 @@ const createQuestion = (choices, maxAttempts, rand) => {
     df.appendChild(qI);
   });
 
-  
   // Add Questions
   qL.appendChild(df);
-  
+  qL.addEventListener('change', checkChange)
   
   // Define SUBMIT BUTTON
-  /*
-    const $submit = document.createElement("button");
-    // $submit.classList.add("btn", "btn-info");
-    $submit.classList.add('submit', "btn", "btn-info", 'disabled');
-  */
   const $submit = reuse.setSelector(null, 'button', 'submit', ['submit', "btn", "btn-info", 'disabled']);
   $submit.textContent = "SUBMIT";
-  // $submit.innerHTML = `<div class='d-grid'>
-  // <button class='btn btn-info' type='button'>SUBMIT</button>
-  // </div>`;
   qL.append($submit);
-  
   
   qB.appendChild(qL);
   
-  
   // Define FEEDBACK AREA
-  /*
-    const $feedback = document.createElement('div')
-    $feedback.id = 'feedback'
-    $feedback.classList.add('flex-grow-1')
-  */
   const $feedback = reuse.setSelector(null, 'div', 'feedback', ['flex-grow-1']);
   $feedback.textContent = 'FEEDBACK HERE'
   qB.appendChild($feedback);
-  $Q.appendChild(qB);
-
-
-
-  log("$Q = ", $Q);
-  
+  $Q.appendChild(qB);  
   return
 }
 
@@ -178,7 +182,7 @@ const checks = document.querySelectorAll(".check");
 // const maxChecked = 2;
 const maxChecked = choices.filter(w => w.correct === true).length;
 
-let counted = null;
+let counted = 0;
 
 const selectiveCheck = (event) => {
   // if (this.checked) {
@@ -192,7 +196,7 @@ const selectiveCheck = (event) => {
     clearOrder(ww);
   });
     
-  log('uncheckedChecks = ', uncheckedChecks);
+  // log('uncheckedChecks = ', uncheckedChecks);
   
   let checkedChecks = document.querySelectorAll(".check:checked");
   
@@ -214,7 +218,7 @@ const selectiveCheck = (event) => {
   // for (let i = 0; i < checks.length; i++) checks[i].onchange = selectiveCheck;
   
   const makeOrder = (flag) => {
-    console.log('make order = ', parseInt(flag.value));
+    // log('make order = ', parseInt(flag.value));
     // let $s = flag.parentNode.querySelector("span");
     // console.log(flag.value);
     // console.log($s);
