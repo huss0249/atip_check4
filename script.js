@@ -2,8 +2,10 @@ const log = console.log
 //========================================================
 
 
+
 // Define Questions
 const questionHead = 'This is the Question Head where the description and instructions of the question will set.<br />Here is a <a href="#">LINK</a> :<br />Question text can be broken into multiple lines.'
+
 
 
 const choices = [
@@ -17,10 +19,12 @@ const choices = [
   { q: "question H", correct: false }
 ];
 //========================================================
-  
+
+
 
 // Define max attempts
 const maxAttempts = 3;
+
 
 
 // Define Feedback levels
@@ -34,11 +38,13 @@ const feedbacks = {
 //========================================================
 const reuse = {
 
+
   // Assign Classes
   setClassList(el, arr) {
     arr.forEach((j) => el.classList.add(j));
     return el;
   },
+
 
   // Define Selectors
   setSelector(selectorRef, newType, newId, classArray) {
@@ -51,10 +57,10 @@ const reuse = {
       newId != undefined || newId != null ? newSelector.id = newId : ''
       reuse.setClassList(newSelector, classArray)
     }
-
     return newSelector;
   },
 
+  
   // Define the shuffle
   shuffle(arr) {
     return arr.sort(() => Math.random() - 0.5);
