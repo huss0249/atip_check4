@@ -48,7 +48,7 @@ $Q.appendChild($qHead);
 // Define Question Body
 const qB = document.createElement("div");
 qB.id = "qBody";
-qB.classList.add('qb', 'd-flex', 'flex-row', 'gap-2');
+qB.classList.add('qb', 'd-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary');
 
 
 // Define Question List
@@ -64,12 +64,12 @@ const fr = new DocumentFragment();
 // Loop Questions
 qs.forEach((q, i, arr) => {
   let qI = document.createElement("li");
-  qI.classList.add('bg-warning', 'd-flex', 'flex-row', 'gap-2');
+  qI.classList.add('bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between');
   qI.setAttribute("data-correct", `${q.correct}`);
   q.order ? qI.setAttribute("data-order", `${q.order}`) : "";
   qI.innerHTML = `
                   <input
-                    class="p-3 form-check-input flex-shrink-1"
+                    class="p-4 form-check-input flex-shrink-1"
                     type="checkbox"
                     value="${i + 1}"
                     aria-label="Checkbox for following text input"
@@ -77,12 +77,16 @@ qs.forEach((q, i, arr) => {
                     >
                   <label
                     for="q-${i + 1}"
-                    class='ms-1 bg-white flex-grow-1'
+                    class='mx-2 bg-white flex-grow-1'
                     >
                     <div
                       class="lbl w-100"
                       >${q.q} check ${i + 1}</div>
                   </label>
+                  <!--
+                  <div class='order position-absolute end-0'></div>
+                  -->
+                  <div class='order rounded-circle'></div>
                 `;
 
   fr.appendChild(qI);
