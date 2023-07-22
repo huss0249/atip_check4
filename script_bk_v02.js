@@ -35,6 +35,7 @@ const feedbacks = {
 
 // Assign Classes
 const setClassList = (el, arr) => {
+  log(el)
   arr.forEach((j) => el.classList.add(j));
   return el;
 }
@@ -92,8 +93,32 @@ const createQuestion = (choices, maxAttempts, rand) => {
     
     qI.setAttribute("data-correct", `${q.correct}`);
     q.order ? qI.setAttribute("data-order", `${q.order}`) : "";
-  
-    // Create INPUT
+    /* 
+    qI.innerHTML = `
+                    <input
+                      class="p-4 form-check-input flex-shrink-1 check"
+                      type="checkbox"
+                      value="${i + 1}"
+                      aria-label="Checkbox for following text input"
+                      id="q-${i + 1}"
+                      >
+                    <label
+                      for="q-${i + 1}"
+                      class='mx-2 bg-white flex-grow-1'
+                      >
+                      <div
+                        class="lbl w-100"
+                        >${q.q} check ${i + 1}</div>
+                    </label>
+                    <!--
+                    <div class='order position-absolute end-0'></div>
+                    -->
+                    <div class='order rounded-circle'></div>
+                    `;
+                     */
+                    
+    
+    
     let $input = setSelector(null, 'input', `q-${i + 1}`, ["p-4", "form-check-input", "flex-shrink-1", "check"])
     $input.type = 'checkbox'
     $input.value = i + 1
@@ -101,7 +126,6 @@ const createQuestion = (choices, maxAttempts, rand) => {
     $input.setAttribute('aria-label', "Checkbox for following text input")
     qI.appendChild($input)
     
-    // Create LABEL
     let $label = setSelector(null, 'label', null, ['mx-2', 'bg-white', 'flex-grow-1'])
     $label.setAttribute('for', `q-${i + 1}`)
     
@@ -111,7 +135,6 @@ const createQuestion = (choices, maxAttempts, rand) => {
     
     qI.appendChild($label)
     
-    // Create Ordered Number display
     let $divNum = setSelector(null, 'div', null, ['order', 'rounded-circle'])
     qI.appendChild($divNum)
 
