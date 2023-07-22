@@ -45,15 +45,11 @@ const feedbacks = {
 // REUSABLE FNs
 //========================================================
 const reuse = {
-
-
   // Assign Classes
   setClassList(el, arr) {
     arr.forEach((j) => el.classList.add(j));
     return el;
   },
-
-
   // Define Selectors
   setSelector(selectorRef, newType, newId, classArray) {
     let newSelector = ''
@@ -67,60 +63,64 @@ const reuse = {
     }
     return newSelector;
   },
-
-
   // Define the shuffle
   shuffle(arr) {
     return arr.sort(() => Math.random() - 0.5);
+  },
+  // Check Checkboxes changes
+  checkChange(e) {
+    // log('event', e.target.closest('li').dataset.correct)
+  
+    // if (this.checked) {
+    //   console.log("Checkbox is checked..");
+    // } else {
+    //   console.log("Checkbox is not checked..");
+    // }
+    log('event', e.target.closest('input').checked)
+    e.target.closest('input').checked === true ? counter++ : counter--;
+    if(counter === maxChck) {
+      $submit.classList.remove('disabled')
+      return false
+    } else {
+      $submit.classList.add('disabled')
+      log('undone')
+    }
+    log(counter)
+  
+  
+  
+  
+    let uncheckedChecks = document.querySelectorAll(".check:not(:checked)");
+    log('uncheckedChecks = ', uncheckedChecks)
+    uncheckedChecks.forEach((ww) => {
+      // clearOrder(ww);
+    });
+      
+    // log('uncheckedChecks = ', uncheckedChecks);
+    
+    let checkedChecks = document.querySelectorAll(".check:checked");
+    log('checkedChecks = ', checkedChecks)
+  
+    counted = checkedChecks.length;
+    // if (checkedChecks.length >= maxChecked + 1) return false;
+    
+    // if (checkedChecks.length > maxChecked) {
+    if (checkedChecks.length >= maxChck) {
+      // makeOrder(event.target);
+      // const $submit = document.querySelector(".submit");
+      // $submit.classList.remove('disabled')
+      log('STOP')
+      return false
+    }
+    // console.log(event.target.value);
+  
+  
   },
 }
 //========================================================
 //========================================================
 
-const checkChange = (e) => {
-  // log('event', e.target.closest('li').dataset.correct)
 
-  // if (this.checked) {
-  //   console.log("Checkbox is checked..");
-  // } else {
-  //   console.log("Checkbox is not checked..");
-  // }
-  log('event', e.target.closest('input').checked)
-  e.target.closest('input').checked === true ? counter++ : counter--;
-  if(counter === maxChck) {
-    $submit.classList.remove('disabled')
-  } else {
-    $submit.classList.add('disabled')
-    log('undone')
-  }
-  log(counter)
-
-
-
-
-  let uncheckedChecks = document.querySelectorAll(".check:not(:checked)");
-  log('uncheckedChecks = ', uncheckedChecks)
-  uncheckedChecks.forEach((ww) => {
-    // clearOrder(ww);
-  });
-    
-  // log('uncheckedChecks = ', uncheckedChecks);
-  
-  let checkedChecks = document.querySelectorAll(".check:checked");
-  log('checkedChecks = ', checkedChecks)
-
-  counted = checkedChecks.length;
-  // if (checkedChecks.length >= maxChecked + 1) return false;
-  if (checkedChecks.length > maxChecked) {
-    // makeOrder(event.target);
-    // const $submit = document.querySelector(".submit");
-    // $submit.classList.remove('disabled')
-    return false
-  }
-  // console.log(event.target.value);
-
-
-}
 
 //========================================================
 
@@ -184,7 +184,7 @@ const createQuestion = (choices, maxAttempts, rand) => {
 
   // Add Questions
   qL.appendChild(df);
-  qL.addEventListener('change', checkChange)
+  qL.addEventListener('change', reuse.checkChange)
   
   // Define SUBMIT BUTTON
   $submit = reuse.setSelector(null, 'button', 'submit', ['submit', "btn", "btn-info", 'disabled']);
