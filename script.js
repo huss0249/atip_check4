@@ -22,6 +22,10 @@ const maxAttempts = 3 // Max attempts
 const maxChck = choices.filter(c => c.correct === true).length // Max checked boxes
 let boxes = [] // Checked Boxes
 let counter = 0 // counter
+
+let $orders = '' // numbered order PlaceHolder
+let $inputs = '' // all inputs PlaceHolder
+
 let inputTarget = '' // Checked target input
 let orderedTarget = '' // Checked target order
 let $submit = '' // SUBMIT button
@@ -73,9 +77,20 @@ const reuse = {
   // Check Answer
   checkAnswer() {
     log('CHECKING ANSWER... ', boxes)
-    // boxes.forEach(x => log(choices[x]))
-    boxes.forEach(inputTarget => log(inputTarget))
-    // boxes.forEach(x => log(choices[x-1]))
+    counter = 0;
+    // boxes.forEach(inputTarget => log(inputTarget))
+    
+    boxes.forEach((box, i) => {
+      $orders.forEach(($order, j) => {
+        if($inputs[j].dataset.order === box) {
+          log('box => ', box, '$inputs [j] = ', $inputs[j].dataset.order, ' | ', '$order = ', $order, ' | ', i + 1)
+          counter++
+          // $order.textContent = i + 1
+        }
+        log('counter = ', counter)
+      })
+    })
+
     return
   },
 
@@ -85,13 +100,15 @@ const reuse = {
     
     inputTarget.checked ? boxes.push(inputTarget.value) : boxes = boxes.filter((item) => inputTarget.value !== item);
     
-    let $orders = document.querySelectorAll('.order')
-    let $inputs = document.querySelectorAll('input')
+    // let $orders = document.querySelectorAll('.order')
+    // let $inputs = document.querySelectorAll('input')
+    $orders = document.querySelectorAll('.order')
+    $inputs = document.querySelectorAll('input')
     
     // Reset Orders numbers first
     $orders.forEach(($order, j) => $order.textContent = null)
 
-    boxes.forEach((box, i) => { 
+    boxes.forEach((box, i) => {
       $orders.forEach(($order, j) => {
         if($inputs[j].value === box) {
           log('box => ', box, '$inputs [j] = ', $inputs[j].value, ' | ', '$order = ', $order, ' | ', i + 1)
