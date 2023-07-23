@@ -67,6 +67,7 @@ const reuse = {
   checkAnswer() {
     log('CHECKING ANSWER... ', checkedBoxes)
     checkedBoxes.forEach(x => log(choices[x]))
+    // checkedBoxes.forEach(x => log(choices[x-1]))
   },
   checkChange(e) {
     // console.log("Correct? ", e.target.closest("input").value);
@@ -96,6 +97,7 @@ const reuse = {
     return arr.filter((item) => x.value !== item);
   },
   updateOrder(checkedBoxes, x) {
+    log('Update order')
     log("checked Boxes = ", checkedBoxes);
     log("x = ", x.dataset.correct);
 
@@ -136,27 +138,31 @@ const createQuestion = (choices, maxAttempts, rand) => {
   const df = new DocumentFragment();
 
   // Loop Questions
-  choices.forEach((choice, i, arr) => {
+  // choices.forEach((choice, i, arr) => {
+  choices.forEach((choice) => {
     // Define Choice Item
     let choiceItem = reuse.setSelector(null, 'li', null, ['bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
     // choiceItem.setAttribute("data-correct", `${choice.correct}`);
     // choice.order ? choiceItem.setAttribute("data-order", `${choice.order}`) : "";
-
+    // choiceItem.addEventListener('change', reuse.checkChange)
+    
     // Create INPUT
     let $input = reuse.setSelector(null, 'input', `choice-${choice.value}`, ["p-4", "form-check-input", "flex-shrink-1", "check"])
     $input.type = 'checkbox'
-    $input.value = `${choice.value}`
-    // $input.setAttribute('value', i + 1)
+    // $input.value = `${choice.value}`
+    $input.setAttribute('value', `${choice.value}`)
     $input.setAttribute('aria-label', "Checkbox for following text input")
-
+    
     $input.setAttribute("data-correct", `${choice.correct}`);
     choice.order ? $input.setAttribute("data-order", `${choice.order}`) : "";
+    // $input.addEventListener('change', reuse.checkChange)
 
     choiceItem.appendChild($input)
 
     // Create LABEL
     let $label = reuse.setSelector(null, 'label', null, ['mx-2', 'bg-white', 'flex-grow-1'])
-    $label.setAttribute('for', `choice-${i + 1}`)
+    // $label.setAttribute('for', `choice-${i + 1}`)
+    $label.setAttribute('for', `choice-${choice.value}`)
     
     let $div = reuse.setSelector(null, 'div', null, ['lbl', 'w-100'])
     // $div.textContent = `${choice.choice} check ${i + 1}`
@@ -179,7 +185,7 @@ const createQuestion = (choices, maxAttempts, rand) => {
   $submit = reuse.setSelector(null, 'button', 'submit', ['submit', "btn", "btn-info", 'disabled']);
   $submit.textContent = "SUBMIT";
   $submit.addEventListener('click', reuse.checkAnswer)
-  choicesList.append($submit);
+  choicesList.appendChild($submit);
   
   questionBody.appendChild(choicesList);
   
