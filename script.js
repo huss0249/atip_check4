@@ -70,6 +70,32 @@ const reuse = {
     }
   },
   
+  
+  // Filter
+  fltr(arr, inputTarget) {
+    // console.log("item = ", item);
+    // console.log("x = ", x);
+    return arr.filter((item) => inputTarget.value !== item);
+  },
+
+  // Update checked order
+  updateOrder(boxes, inputTarget) {
+    log('Update order')
+    log("checked Boxes = ", boxes);
+    log("inputTarget = ", inputTarget.dataset.correct);
+
+    if(boxes.length === maxChck) {
+      $submit.classList.remove('disabled', 'opacity-25')
+      // return false
+    } else {
+      $submit.classList.add('disabled', 'opacity-25')
+      // log('undone')
+    }
+    log('boxes length = ', boxes.length)
+
+    orderedTarget.textContent = boxes.indexOf(inputTarget.value) + 1;
+  },
+  
   // Check Answer
   checkAnswer() {
     log('CHECKING ANSWER... ', boxes)
@@ -102,30 +128,6 @@ const reuse = {
 
   },
 
-  // Filter
-  fltr(arr, inputTarget) {
-    // console.log("item = ", item);
-    // console.log("x = ", x);
-    return arr.filter((item) => inputTarget.value !== item);
-  },
-
-  // Update checked order
-  updateOrder(boxes, inputTarget) {
-    log('Update order')
-    log("checked Boxes = ", boxes);
-    log("inputTarget = ", inputTarget.dataset.correct);
-
-    if(boxes.length === maxChck) {
-      $submit.classList.remove('disabled')
-      // return false
-    } else {
-      $submit.classList.add('disabled')
-      // log('undone')
-    }
-    log('boxes length = ', boxes.length)
-
-    orderedTarget.textContent = boxes.indexOf(inputTarget.value) + 1;
-  },
 }
 /*
 __________________________________________________________
@@ -142,7 +144,7 @@ const buildQuestion = (choices, rand) => {
   const $qHead = reuse.setObj(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
   const $qBody = reuse.setObj(null, 'div', 'qBody', ['d-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
   const $choices = reuse.setObj(null, 'ul', 'choices', ['list-unstyled', 'd-grid', 'gap-2', 'flex-grow-1']);
-  $submit = reuse.setObj(null, 'button', 'submit', ['btn', 'btn-info', 'disabled', 'animated', 'fadeIn']);
+  $submit = reuse.setObj(null, 'button', 'submit', ['btn', 'btn-info', 'disabled', 'opacity-25', 'animated', 'fadeIn']);
   const $feedback = reuse.setObj(null, 'div', 'feedback', ['flex-grow-1']);
   const df = new DocumentFragment();
 
