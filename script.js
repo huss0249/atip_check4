@@ -18,7 +18,9 @@ const choices = [
   { choice: "Question H", value: 8, correct: false }
 ];
 
-const maxAttempts = 3 // Max attempts
+let $Question = ''
+let attempts = 0 // attempts counter
+const maxAttempts = 2 // Max attempts
 const maxChck = choices.filter(c => c.correct === true).length // Max checked boxes
 let boxes = [] // Checked Boxes
 let counter = 0 // counter
@@ -66,6 +68,15 @@ const reuse = {
   shuffle(arr) {
     return arr.sort(() => Math.random() - 0.5);
   },
+
+  resetQuestion() {
+    log('resetting question')
+    // log($inputs)
+    $inputs.forEach($input => $input.checked = false)
+    $orders.forEach($order => $order.textContent = null)
+    $Question.innerHTML = ''
+    buildQuestion(choices, rand = true)
+  },
   
   // Check Checkboxes changes
   checkMax(e) {
@@ -87,9 +98,21 @@ const reuse = {
           counter++
           // $order.textContent = i + 1
         }
-        log('counter = ', counter)
       })
     })
+    log('counter = ', counter)
+    if(counter === maxChck) {
+      log('load correct feedback')
+    } else {
+      if(attempts < maxAttempts) {
+        log('load incorrect feedback')
+        attempts++
+      } else {
+        log('load failed feedback')
+        // attempts++
+        reuse.resetQuestion()
+      }
+    }
 
     return
   },
@@ -134,7 +157,8 @@ const buildQuestion = (choices, rand) => {
   rand ? reuse.shuffle(choices) : ''
 
   // Create Objects
-  const $Question = reuse.setObj("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
+  // const $Question = reuse.setObj("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
+  $Question = reuse.setObj("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
   const $qHead = reuse.setObj(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
   const $qBody = reuse.setObj(null, 'div', 'qBody', ['d-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
   const $choices = reuse.setObj(null, 'ul', 'choices', ['list-unstyled', 'd-grid', 'gap-2', 'flex-grow-1']);
