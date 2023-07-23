@@ -18,7 +18,7 @@ const maxAttempts = 3;
 // Define Max number of checked boxes
 const maxChck = choices.filter(w => w.correct === true).length;
 // Checked List
-let listx = []
+let checkedBoxes = []
 // counter
 let counter = 0;
 // Define checked target input
@@ -60,14 +60,15 @@ const reuse = {
   },
   // Check Checkboxes changes
   checkMax(e) {
-    if (listx.length === maxChck) {
+    if (checkedBoxes.length === maxChck) {
       // return false;
     }
   },
   checkChange(e) {
     // console.log("Correct? ", e.target.closest("input").value);
     // console.log("Correct? ", e.target.closest("input"));
-    if (listx.length === maxChck) {
+    if (checkedBoxes.length === maxChck) {
+      
       // return false;
       if (e.target.closest("input").checked === false) {
         log("unchecked");
@@ -76,29 +77,43 @@ const reuse = {
       x = e.target.closest("input");
       let sp = e.target.parentNode;
       s = sp.querySelector("span");
-      log("s = ", s, " | x = ", x);
-      if (true === x.checked) {
-        log(x.checked);
-        // list.push(boxval);
-        listx.push(x.value);
-        log(listx.indexOf(x.value) + 1);
-        // s.textContent = listx.indexOf(x.value) + 1;
-        reuse.updateOrder(listx, x);
+      // log("s = ", s, " | x = ", x);
+
+
+      // e.target.closest('input').checked === true ? counter++ : counter--;
+      x.checked === true ? counter++ : counter--;
+      if(counter === maxChck) {
+        $submit.classList.remove('disabled')
+        // return false
       } else {
-        log(x.checked);
-        // list = list.filter((listItem) => boxval !== listItem);
-        // listx = listx.filter((item) => reuse.fltr(item, x));
-
-        listx = reuse.fltr(listx, x);
-        s.textContent = "";
-        // log(listx.indexOf(x.value) + 1);
-
-        // console.log("listx = ", listx);
+        $submit.classList.add('disabled')
+        // log('undone')
       }
-      listx.length == maxChck
-        ? log("MAX = ", listx, listx.length)
-        : log("O = ", listx, listx.length);
-      // console.log(listx, listx.length);
+      log('counter = ', counter)
+
+      
+      if (true === x.checked) {
+        // log(x.checked);
+        // list.push(boxval);
+        checkedBoxes.push(x.value);
+        // log(checkedBoxes.indexOf(x.value) + 1);
+        // s.textContent = checkedBoxes.indexOf(x.value) + 1;
+        reuse.updateOrder(checkedBoxes, x);
+      } else {
+        // log(x.checked);
+        // list = list.filter((listItem) => boxval !== listItem);
+        // checkedBoxes = checkedBoxes.filter((item) => reuse.fltr(item, x));
+
+        checkedBoxes = reuse.fltr(checkedBoxes, x);
+        s.textContent = "";
+        // log(checkedBoxes.indexOf(x.value) + 1);
+
+        // console.log("checkedBoxes = ", checkedBoxes);
+      }
+      checkedBoxes.length === maxChck
+        ? log("MAX = ", checkedBoxes, checkedBoxes.length)
+        : log("O = ", checkedBoxes, checkedBoxes.length);
+      // console.log(checkedBoxes, checkedBoxes.length);
     }
   },
   fltr(arr, x) {
@@ -106,10 +121,10 @@ const reuse = {
     // console.log("x = ", x);
     return arr.filter((item) => x.value !== item);
   },
-  updateOrder(listx, x) {
-    log("listx = ", listx);
-    log("x = ", x);
-    s.textContent = listx.indexOf(x.value) + 1;
+  updateOrder(checkedBoxes, x) {
+    // log("checkedBoxes = ", checkedBoxes);
+    // log("x = ", x);
+    s.textContent = checkedBoxes.indexOf(x.value) + 1;
   },
   // OLDCheck Checkboxes changes
   checkChange_OLD(e) {
