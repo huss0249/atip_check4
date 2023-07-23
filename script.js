@@ -3,14 +3,14 @@ const log = console.log
 // Define Questions
 const questionHead = 'This is the Question Head where the description and instructions of the question will set.<br />Here is a <a href="#">LINK</a> :<br />Question text can be broken into multiple lines.'
 const choices = [
-  { q: "question A", correct: true, order: 1 },
-  { q: "question B", correct: true, order: 2 },
-  { q: "question C", correct: true, order: 3 },
-  { q: "question D", correct: true, order: 4 },
-  { q: "question E", correct: false },
-  { q: "question F", correct: false },
-  { q: "question G", correct: false },
-  { q: "question H", correct: false }
+  { choice: "Question A", value: 1, correct: true, order: 1 },
+  { choice: "Question B", value: 2, correct: true, order: 2 },
+  { choice: "Question C", value: 3, correct: true, order: 3 },
+  { choice: "Question D", value: 4, correct: true, order: 4 },
+  { choice: "Question E", value: 5, correct: false },
+  { choice: "Question F", value: 6, correct: false },
+  { choice: "Question G", value: 7, correct: false },
+  { choice: "Question H", value: 8, correct: false }
 ];
 //========================================================
 // Define max attempts
@@ -123,71 +123,71 @@ const createQuestion = (choices, maxAttempts, rand) => {
   // Randomize Questions
   rand ? reuse.shuffle(choices) : ''
   // Get Questions Container
-  const $Q = reuse.setSelector("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
+  const $Question = reuse.setSelector("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
   // Add Question head
-  const $qHead = reuse.setSelector(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
-  $qHead.innerHTML = questionHead;
-  $Q.appendChild($qHead);
+  const $questionHead = reuse.setSelector(null, 'p', 'questionHead', ['bg-dark', 'text-light', 'p-3']);
+  $questionHead.innerHTML = questionHead;
+  $Question.appendChild($questionHead);
   // Define Question Body
-  const qB = reuse.setSelector(null, 'div', 'qBody', ['qb', 'd-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
+  const questionBody = reuse.setSelector(null, 'div', 'questionBody', ['questionBody', 'd-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
   // Define Question List
-  const qL = reuse.setSelector(null, 'ul', 'qList', ['ql', "list-unstyled", 'd-grid', 'gap-2', 'flex-grow-1']);
+  const choicesList = reuse.setSelector(null, 'ul', 'choicesList', ['choicesList', "list-unstyled", 'd-grid', 'gap-2', 'flex-grow-1']);
   // Document Fragment
   const df = new DocumentFragment();
 
   // Loop Questions
-  choices.forEach((q, i, arr) => {
+  choices.forEach((choice, i, arr) => {
     // Define Choice Item
-    let qI = reuse.setSelector(null, 'li', null, ['bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
-    // qI.setAttribute("data-correct", `${q.correct}`);
-    // q.order ? qI.setAttribute("data-order", `${q.order}`) : "";
+    let choiceItem = reuse.setSelector(null, 'li', null, ['bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
+    // choiceItem.setAttribute("data-correct", `${choice.correct}`);
+    // choice.order ? choiceItem.setAttribute("data-order", `${choice.order}`) : "";
 
     // Create INPUT
-    let $input = reuse.setSelector(null, 'input', `q-${i + 1}`, ["p-4", "form-check-input", "flex-shrink-1", "check"])
+    let $input = reuse.setSelector(null, 'input', `choice-${choice.value}`, ["p-4", "form-check-input", "flex-shrink-1", "check"])
     $input.type = 'checkbox'
-    $input.value = i + 1
+    $input.value = `${choice.value}`
     // $input.setAttribute('value', i + 1)
     $input.setAttribute('aria-label', "Checkbox for following text input")
 
-    $input.setAttribute("data-correct", `${q.correct}`);
-    q.order ? $input.setAttribute("data-order", `${q.order}`) : "";
+    $input.setAttribute("data-correct", `${choice.correct}`);
+    choice.order ? $input.setAttribute("data-order", `${choice.order}`) : "";
 
-    qI.appendChild($input)
+    choiceItem.appendChild($input)
 
     // Create LABEL
     let $label = reuse.setSelector(null, 'label', null, ['mx-2', 'bg-white', 'flex-grow-1'])
-    $label.setAttribute('for', `q-${i + 1}`)
+    $label.setAttribute('for', `choice-${i + 1}`)
     
     let $div = reuse.setSelector(null, 'div', null, ['lbl', 'w-100'])
-    // $div.textContent = `${q.q} check ${i + 1}`
-    $div.textContent = `${q.q}`
+    // $div.textContent = `${choice.choice} check ${i + 1}`
+    $div.textContent = `${choice.choice}`
     $label.appendChild($div)
-    qI.appendChild($label)
+    choiceItem.appendChild($label)
 
     // Create Ordered Number display
     let $divNum = reuse.setSelector(null, 'span', null, ['order', 'rounded-circle'])
-    qI.appendChild($divNum)
+    choiceItem.appendChild($divNum)
 
-    df.appendChild(qI);
+    df.appendChild(choiceItem);
   });
 
   // Add Questions
-  qL.appendChild(df);
-  qL.addEventListener('change', reuse.checkChange)
+  choicesList.appendChild(df);
+  choicesList.addEventListener('change', reuse.checkChange)
   
   // Define SUBMIT BUTTON
   $submit = reuse.setSelector(null, 'button', 'submit', ['submit', "btn", "btn-info", 'disabled']);
   $submit.textContent = "SUBMIT";
   $submit.addEventListener('click', reuse.checkAnswer)
-  qL.append($submit);
+  choicesList.append($submit);
   
-  qB.appendChild(qL);
+  questionBody.appendChild(choicesList);
   
   // Define FEEDBACK AREA
   const $feedback = reuse.setSelector(null, 'div', 'feedback', ['flex-grow-1']);
   $feedback.textContent = 'FEEDBACK HERE'
-  qB.appendChild($feedback);
-  $Q.appendChild(qB);  
+  questionBody.appendChild($feedback);
+  $Question.appendChild(questionBody);  
   return
 }
 
