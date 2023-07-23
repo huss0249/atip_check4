@@ -18,31 +18,18 @@ const choices = [
   { choice: "Question H", value: 8, correct: false }
 ];
 
-// Max attempts
-const maxAttempts = 3;
-
-// Max checked boxes
-const maxChck = choices.filter(c => c.correct === true).length;
-
-// Checked Boxes
-let boxes = []
-
-// counter
-let counter = 0;
-
-// Checked target input
-let inputTarget = ''
-let orderedTarget = ''
-
-// SUBMIT button
-let $submit = ''
-
-// Feedback levels
+const maxAttempts = 3 // Max attempts
+const maxChck = choices.filter(c => c.correct === true).length // Max checked boxes
+let boxes = [] // Checked Boxes
+let counter = 0 // counter
+let inputTarget = '' // Checked target input
+let orderedTarget = '' // Checked target order
+let $submit = '' // SUBMIT button
 const feedbacks = {
   correct: "Feedback 1",
   incorrect1: "Feedback 2",
   failed: "Feedback 3",
-}
+} // Feedback levels
 
 /*
 __________________________________________________________
@@ -56,6 +43,7 @@ const reuse = {
     arr.forEach((j) => el.classList.add(j));
     return el;
   },
+
   // Define Selectors
   setObj(selectorRef, newType, newId, classArray) {
     let newSelector = ''
@@ -69,22 +57,28 @@ const reuse = {
     }
     return newSelector;
   },
+  
   // Define the shuffle
   shuffle(arr) {
     return arr.sort(() => Math.random() - 0.5);
   },
+  
   // Check Checkboxes changes
   checkMax(e) {
     if (boxes.length === maxChck) {
       // return false;
     }
   },
+  
+  // Check Answer
   checkAnswer() {
     log('CHECKING ANSWER... ', boxes)
     // boxes.forEach(x => log(choices[x]))
     boxes.forEach(inputTarget => log(inputTarget))
     // boxes.forEach(x => log(choices[x-1]))
   },
+
+  // Check changes
   checkChange(e) {
     // console.log("Correct? ", e.target.closest("input").value);
     // console.log("Correct? ", e.target.closest("input"));
@@ -107,11 +101,15 @@ const reuse = {
       : log("O = ", boxes, boxes.length);
 
   },
+
+  // Filter
   fltr(arr, inputTarget) {
     // console.log("item = ", item);
     // console.log("x = ", x);
     return arr.filter((item) => inputTarget.value !== item);
   },
+
+  // Update checked order
   updateOrder(boxes, inputTarget) {
     log('Update order')
     log("checked Boxes = ", boxes);
