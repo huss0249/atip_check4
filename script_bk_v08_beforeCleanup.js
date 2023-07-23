@@ -87,45 +87,70 @@ const reuse = {
   },
 
   restartQuestion() {
+    log('restarting question')
+    // log($inputs)
     boxes = []
+    // attempts = 0;
+    // counter = 0;
+    // $inputs.forEach($input => $input.checked = false)
     reuse.resetInputs()
+    // $orders.forEach($order => $order.textContent = null)
     reuse.clearOrders()
     $feedback.innerHTML = ''
+    // $Question.innerHTML = ''
+    // buildQuestion(choices, rand = true)
   },
   
   resetQuestion() {
+    log('resetting question')
+    // log($inputs)
     boxes = []
     attempts = 0;
     counter = 0;
+    // $inputs.forEach($input => $input.checked = false)
     reuse.resetInputs()
+    // $orders.forEach($order => $order.textContent = null)
     reuse.clearOrders()
     $feedback.innerHTML = ''
     $Question.innerHTML = ''
     buildQuestion(choices, rand = true)
   },
   
+  // Check Checkboxes changes
+  checkMax(e) {
+    if (boxes.length === maxChck) {
+      // return false;
+    }
+  },
+
   // Check Answer
   checkAnswer() {
+    log('CHECKING ANSWER... ', boxes)
     counter = 0;
+    // boxes.forEach(inputTarget => log(inputTarget))
+    
     boxes.forEach((box, i) => {
       $orders.forEach(($order, j) => {
         if($inputs[j].dataset.order === box) {
-          // log('box => ', box, '$inputs [j] = ', $inputs[j].dataset.order, ' | ', '$order = ', $order, ' | ', i + 1)
+          log('box => ', box, '$inputs [j] = ', $inputs[j].dataset.order, ' | ', '$order = ', $order, ' | ', i + 1)
           counter++
+          // $order.textContent = i + 1
         }
       })
     })
-    // log('counter = ', counter)
+    log('counter = ', counter)
     if(counter === maxChck) {
-      // log('load correct feedback')
+      log('load correct feedback')
       $feedback.innerHTML = feedbacks.correct;
       $submit.classList.add('disabled', 'opacity-25')
+      // document.getElementById('choices').removeEventListener('change', reuse.getChecked)
       document.querySelectorAll('input').forEach(i => i.setAttribute("disabled","disabled"))
     } else {
       if(attempts < maxAttempts) {
-        // log('load incorrect feedback')
+        log('load incorrect feedback')
         $feedback.innerHTML = feedbacks.incorrect;
 
+        // let $restart = document.createElement('button')
         let $restart = reuse.setObj(null, 'button', null, ['btn', 'btn-info', 'animated', 'fadeIn']);
         $restart.textContent = restartText
         $restart.addEventListener('click', reuse.restartQuestion)
@@ -133,15 +158,20 @@ const reuse = {
         
         attempts++
       } else {
-        // log('load failed feedback')
+        log('load failed feedback')
         $feedback.innerHTML = feedbacks.failed;
 
+        // let $reset = document.createElement('button')
         let $reset = reuse.setObj(null, 'button', null, ['btn', 'btn-info', 'animated', 'fadeIn']);
         $reset.textContent = resetText
         $reset.addEventListener('click', reuse.resetQuestion)
         $feedback.appendChild($reset)
+
+        // attempts++
+        // reuse.resetQuestion()
       }
     }
+
     return
   },
 
@@ -150,7 +180,9 @@ const reuse = {
     inputTarget = e.target.closest("input");
     
     inputTarget.checked ? boxes.push(inputTarget.value) : boxes = boxes.filter((item) => inputTarget.value !== item);
-
+    
+    // let $orders = document.querySelectorAll('.order')
+    // let $inputs = document.querySelectorAll('input')
     $orders = document.querySelectorAll('.order')
     $inputs = document.querySelectorAll('input')
     
@@ -160,7 +192,7 @@ const reuse = {
     boxes.forEach((box, i) => {
       $orders.forEach(($order, j) => {
         if($inputs[j].value === box) {
-          // log('box => ', box, '$inputs [j] = ', $inputs[j].value, ' | ', '$order = ', $order, ' | ', i + 1)
+          log('box => ', box, '$inputs [j] = ', $inputs[j].value, ' | ', '$order = ', $order, ' | ', i + 1)
           $order.classList.remove('opacity-0')
           $order.textContent = i + 1
         }
@@ -184,11 +216,10 @@ const buildQuestion = (choices, rand) => {
   rand ? reuse.shuffle(choices) : ''
 
   // Create Objects
+  // const $Question = reuse.setObj("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
   $Question = reuse.setObj("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
-  // const $qHead = reuse.setObj(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
-  const $qHead = reuse.setObj(null, 'p', 'qHead', ['p-3']);
-  // const $qBody = reuse.setObj(null, 'div', 'qBody', ['d-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
-  const $qBody = reuse.setObj(null, 'div', 'qBody', ['d-flex', 'flex-row', 'gap-2', 'p-3']);
+  const $qHead = reuse.setObj(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
+  const $qBody = reuse.setObj(null, 'div', 'qBody', ['d-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
   const $choices = reuse.setObj(null, 'ul', 'choices', ['list-unstyled', 'd-grid', 'gap-2', 'flex-grow-1']);
   $submit = reuse.setObj(null, 'button', 'submit', ['btn', 'btn-info', 'disabled', 'opacity-25', 'animated', 'fadeIn']);
   $feedback = reuse.setObj(null, 'div', 'feedback', ['flex-grow-1']);
@@ -198,11 +229,9 @@ const buildQuestion = (choices, rand) => {
   // Loop Questions
   choices.forEach((choice) => {
     // Create loop objects
-    // let $choice = reuse.setObj(null, 'li', null, ['choice', 'bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
-    let $choice = reuse.setObj(null, 'li', null, ['choice', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
+    let $choice = reuse.setObj(null, 'li', null, ['choice', 'bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
     let $input = reuse.setObj(null, 'input', `choice-${choice.value}`, ['p-4', 'form-check-input', 'flex-shrink-1', 'check', 'animated', 'fadeIn'])
-    // let $label = reuse.setObj(null, 'label', null, ['mx-2', 'bg-white', 'flex-grow-1'])
-    let $label = reuse.setObj(null, 'label', null, ['mx-2', 'flex-grow-1'])
+    let $label = reuse.setObj(null, 'label', null, ['mx-2', 'bg-white', 'flex-grow-1'])
     let $div = reuse.setObj(null, 'div', null, ['lbl', 'w-100', 'animated', 'fadeIn'])
     let $divNum = reuse.setObj(null, 'span', null, ['order', 'rounded-circle', 'opacity-0', 'animated', 'fadeIn'])
     
@@ -219,11 +248,14 @@ const buildQuestion = (choices, rand) => {
     choice.order ? $input.setAttribute('data-order', `${choice.order}`) : '';
     $label.setAttribute('for', `choice-${choice.value}`)
     
+    // Add Listeners
+    // $input.addEventListener('change', reuse.getChecked)
+    
     // Append to parent objects
     $label.appendChild($div)
-    $choice.appendChild($divNum)
     $choice.appendChild($input)
     $choice.appendChild($label)
+    $choice.appendChild($divNum)
     
     df.appendChild($choice);
   });
@@ -231,6 +263,7 @@ const buildQuestion = (choices, rand) => {
   // Fill Objects
   $qHead.innerHTML = qHead;
   $submit.textContent = submitText;
+  // $feedback.textContent = 'FEEDBACK HERE'
   $feedback.innerHTML = ''
 
   // Append objects to DOM elements

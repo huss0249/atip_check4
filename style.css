@@ -1,6 +1,6 @@
 body, body * {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 15pt;
+  font-size: 16pt;
 }
 #q {
     /* width: 50%; */
@@ -16,9 +16,10 @@ body, body * {
 .order {
   width: 50px;
   height: 50px;
+  font-weight: bold;
   background: white;
   text-align: center;
-  line-height: 3;
+  line-height: 2.5;
 }
   .btn {
     /* background: orange; */
