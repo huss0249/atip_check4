@@ -110,6 +110,55 @@ const reuse = {
 
     s.textContent = checkedBoxes.indexOf(x.value) + 1;
   },
+  // OLDCheck Checkboxes changes
+  checkChange_OLD(e) {
+    log('Correct? ', e.target.closest('li').dataset.correct)
+  
+    // if (this.checked) {
+    //   console.log("Checkbox is checked..");
+    // } else {
+    //   console.log("Checkbox is not checked..");
+    // }
+    log('checked? ', e.target.closest('input').checked)
+    e.target.closest('input').checked === true ? counter++ : counter--;
+    if(counter === maxChck) {
+      $submit.classList.remove('disabled')
+      return false
+    } else {
+      $submit.classList.add('disabled')
+      // log('undone')
+    }
+    log('counter = ', counter)
+  
+  
+  
+  
+    let uncheckedChecks = document.querySelectorAll(".check:not(:checked)");
+    // log('uncheckedChecks = ', uncheckedChecks)
+    uncheckedChecks.forEach((ww) => {
+      // clearOrder(ww);
+    });
+      
+    // log('uncheckedChecks = ', uncheckedChecks);
+    
+    let checkedChecks = document.querySelectorAll(".check:checked");
+    // log('checkedChecks = ', checkedChecks)
+  
+    counted = checkedChecks.length;
+    // if (checkedChecks.length >= maxChecked + 1) return false;
+    
+    // if (checkedChecks.length > maxChecked) {
+    if (checkedChecks.length >= maxChck) {
+      // makeOrder(event.target);
+      // const $submit = document.querySelector(".submit");
+      // $submit.classList.remove('disabled')
+      log('STOP')
+      return false
+    }
+    // console.log(event.target.value);
+  
+  
+  },
 }
 //========================================================
 //========================================================
