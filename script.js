@@ -83,6 +83,17 @@ const reuse = {
   setCheckOrder(boxes) {
     log('set check order => ', " | checked Boxes = ", boxes, ' | ', boxes.length);
 
+    let $orders = document.querySelectorAll('.order')
+    // $orders.forEach($order => log($order.closest('li')))
+    // $orders.forEach($order => log($order.parentElement))
+    $orders.forEach($order => log($order.previousElementSibling.previousElementSibling.value))
+    
+    let $items = document.querySelectorAll('.choice')
+    // $orders.forEach($order => log($order.closest('li')))
+    // $orders.forEach($order => log($order.parentElement))
+    $items.forEach($item => log($item.querySelector('.lbl')))
+    
+    
     orderedTarget.textContent = boxes.indexOf(inputTarget.value) + 1;
 
     boxes.length === maxChck ? $submit.classList.remove('disabled', 'opacity-25') : $submit.classList.add('disabled', 'opacity-25');
@@ -100,53 +111,13 @@ const reuse = {
   },
 
   // get Checked box
-  processChecked(inputTarget, orderedTarget) {
-    // log('process = ', inputTarget.checked)
-    /*
-    if (inputTarget.checked) {
-      boxes.push(inputTarget.value);
-      
-      // reuse.setCheckOrder(boxes, inputTarget);
-    } else {
-      
-      boxes = reuse.fltr(boxes, inputTarget);
-      // orderedTarget.textContent = "";
-    }
-    */
-    inputTarget.checked ? boxes.push(inputTarget.value) : boxes = reuse.fltr(boxes, inputTarget);
-
-    return reuse.setCheckOrder(boxes);
-  },
-
-  // get Checked box
   getChecked(e) {
     inputTarget = e.target.closest("input");
     let targetParent = e.target.parentNode;
     orderedTarget = targetParent.querySelector("span");
     
-    // reuse.processChecked(inputTarget, orderedTarget)
-
     inputTarget.checked ? boxes.push(inputTarget.value) : boxes = reuse.fltr(boxes, inputTarget);
-
     return reuse.setCheckOrder(boxes);
-
-
-    /* 
-    if (inputTarget.checked) {
-      boxes.push(inputTarget.value);
-      // s.textContent = boxes.indexOf(x.value) + 1;
-      reuse.setCheckOrder(boxes, inputTarget);
-    } else {
-    
-      boxes = reuse.fltr(boxes, inputTarget);
-      orderedTarget.textContent = "";
-    }
-    */
-    
-    // boxes.length === maxChck
-    //   ? log("MAX = ", boxes, boxes.length)
-    //   : log("O = ", boxes, boxes.length);
-// return
   },
 
 }
@@ -173,7 +144,7 @@ const buildQuestion = (choices, rand) => {
   // Loop Questions
   choices.forEach((choice) => {
     // Create loop objects
-    let $choice = reuse.setObj(null, 'li', null, ['bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
+    let $choice = reuse.setObj(null, 'li', null, ['choice', 'bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
     let $input = reuse.setObj(null, 'input', `choice-${choice.value}`, ['p-4', 'form-check-input', 'flex-shrink-1', 'check', 'animated', 'fadeIn'])
     let $label = reuse.setObj(null, 'label', null, ['mx-2', 'bg-white', 'flex-grow-1'])
     let $div = reuse.setObj(null, 'div', null, ['lbl', 'w-100', 'animated', 'fadeIn'])
