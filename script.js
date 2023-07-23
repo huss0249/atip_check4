@@ -1,13 +1,7 @@
 const log = console.log
 //========================================================
-
-
-
 // Define Questions
 const questionHead = 'This is the Question Head where the description and instructions of the question will set.<br />Here is a <a href="#">LINK</a> :<br />Question text can be broken into multiple lines.'
-
-
-
 const choices = [
   { q: "question A", correct: true, order: 1 },
   { q: "question B", correct: true, order: 2 },
@@ -19,22 +13,19 @@ const choices = [
   { q: "question H", correct: false }
 ];
 //========================================================
-
-
-
 // Define max attempts
 const maxAttempts = 3;
-
+// Define Max number of checked boxes
 const maxChck = choices.filter(w => w.correct === true).length;
-log('maxChck = ', maxChck)
-
+// Checked List
+let listx = []
 // counter
 let counter = 0;
-
+// Define checked target input
+let x = ''
+let s = ''
+// Define SUBMIT button
 let $submit = ''
-
-
-
 // Define Feedback levels
 const feedbacks = {
   correct: "Feedback 1",
@@ -68,30 +59,83 @@ const reuse = {
     return arr.sort(() => Math.random() - 0.5);
   },
   // Check Checkboxes changes
+  checkMax(e) {
+    if (listx.length === maxChck) {
+      // return false;
+    }
+  },
   checkChange(e) {
-    // log('event', e.target.closest('li').dataset.correct)
+    // console.log("Correct? ", e.target.closest("input").value);
+    // console.log("Correct? ", e.target.closest("input"));
+    if (listx.length === maxChck) {
+      // return false;
+      if (e.target.closest("input").checked === false) {
+        log("unchecked");
+      }
+    } else {
+      x = e.target.closest("input");
+      let sp = e.target.parentNode;
+      s = sp.querySelector("span");
+      log("s = ", s, " | x = ", x);
+      if (true === x.checked) {
+        log(x.checked);
+        // list.push(boxval);
+        listx.push(x.value);
+        log(listx.indexOf(x.value) + 1);
+        // s.textContent = listx.indexOf(x.value) + 1;
+        reuse.updateOrder(listx, x);
+      } else {
+        log(x.checked);
+        // list = list.filter((listItem) => boxval !== listItem);
+        // listx = listx.filter((item) => reuse.fltr(item, x));
+
+        listx = reuse.fltr(listx, x);
+        s.textContent = "";
+        // log(listx.indexOf(x.value) + 1);
+
+        // console.log("listx = ", listx);
+      }
+      listx.length == maxChck
+        ? log("MAX = ", listx, listx.length)
+        : log("O = ", listx, listx.length);
+      // console.log(listx, listx.length);
+    }
+  },
+  fltr(arr, x) {
+    // console.log("item = ", item);
+    // console.log("x = ", x);
+    return arr.filter((item) => x.value !== item);
+  },
+  updateOrder(listx, x) {
+    log("listx = ", listx);
+    log("x = ", x);
+    s.textContent = listx.indexOf(x.value) + 1;
+  },
+  // OLDCheck Checkboxes changes
+  checkChange_OLD(e) {
+    log('Correct? ', e.target.closest('li').dataset.correct)
   
     // if (this.checked) {
     //   console.log("Checkbox is checked..");
     // } else {
     //   console.log("Checkbox is not checked..");
     // }
-    log('event', e.target.closest('input').checked)
+    log('checked? ', e.target.closest('input').checked)
     e.target.closest('input').checked === true ? counter++ : counter--;
     if(counter === maxChck) {
       $submit.classList.remove('disabled')
       return false
     } else {
       $submit.classList.add('disabled')
-      log('undone')
+      // log('undone')
     }
-    log(counter)
+    log('counter = ', counter)
   
   
   
   
     let uncheckedChecks = document.querySelectorAll(".check:not(:checked)");
-    log('uncheckedChecks = ', uncheckedChecks)
+    // log('uncheckedChecks = ', uncheckedChecks)
     uncheckedChecks.forEach((ww) => {
       // clearOrder(ww);
     });
@@ -99,7 +143,7 @@ const reuse = {
     // log('uncheckedChecks = ', uncheckedChecks);
     
     let checkedChecks = document.querySelectorAll(".check:checked");
-    log('checkedChecks = ', checkedChecks)
+    // log('checkedChecks = ', checkedChecks)
   
     counted = checkedChecks.length;
     // if (checkedChecks.length >= maxChecked + 1) return false;
@@ -126,35 +170,25 @@ const reuse = {
 
 
 const createQuestion = (choices, maxAttempts, rand) => {
+  // Randomize Questions
   rand ? reuse.shuffle(choices) : ''
-
-
   // Get Questions Container
   const $Q = reuse.setSelector("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
-
-
   // Add Question head
   const $qHead = reuse.setSelector(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
   $qHead.innerHTML = questionHead;
   $Q.appendChild($qHead);
-  
-
   // Define Question Body
   const qB = reuse.setSelector(null, 'div', 'qBody', ['qb', 'd-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
-  
-
   // Define Question List
   const qL = reuse.setSelector(null, 'ul', 'qList', ['ql', "list-unstyled", 'd-grid', 'gap-2', 'flex-grow-1']);
-  
-
   // Document Fragment
   const df = new DocumentFragment();
 
-
   // Loop Questions
-  choices.forEach((q, i, arr) => {  
+  choices.forEach((q, i, arr) => {
+    // Define Choice Item
     let qI = reuse.setSelector(null, 'li', null, ['bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
-    
     qI.setAttribute("data-correct", `${q.correct}`);
     q.order ? qI.setAttribute("data-order", `${q.order}`) : "";
 
@@ -176,7 +210,7 @@ const createQuestion = (choices, maxAttempts, rand) => {
     qI.appendChild($label)
 
     // Create Ordered Number display
-    let $divNum = reuse.setSelector(null, 'div', null, ['order', 'rounded-circle'])
+    let $divNum = reuse.setSelector(null, 'span', null, ['order', 'rounded-circle'])
     qI.appendChild($divNum)
 
     df.appendChild(qI);
@@ -203,105 +237,3 @@ const createQuestion = (choices, maxAttempts, rand) => {
 
 createQuestion(choices, maxAttempts, rand = true)
 //========================================================
-
-
-
-
-
-  //========================================================
-  
-  //========================================================
-  
-const checks = document.querySelectorAll(".check");
-// const maxChecked = 2;
-const maxChecked = choices.filter(w => w.correct === true).length;
-
-let counted = 0;
-
-const selectiveCheck = (event) => {
-  // if (this.checked) {
-  //   console.log("Checkbox is checked..");
-  // } else {
-  //   console.log("Checkbox is not checked..");
-  // }
-
-  let uncheckedChecks = document.querySelectorAll(".check:not(:checked)");
-  uncheckedChecks.forEach((ww) => {
-    clearOrder(ww);
-  });
-    
-  // log('uncheckedChecks = ', uncheckedChecks);
-  
-  let checkedChecks = document.querySelectorAll(".check:checked");
-  
-  counted = checkedChecks.length;
-  // if (checkedChecks.length >= maxChecked + 1) return false;
-  if (checkedChecks.length > maxChecked) {
-    makeOrder(event.target);
-    const $submit = document.querySelector(".submit");
-    $submit.classList.remove('disabled')
-    return false
-  }
-  // console.log(event.target.value);
-}
-
-  // for (let i = 0; i < checks.length; i++) checks[i].onclick = selectiveCheck;
-  // for (let i = 0; i < checks.length; i++)
-  //   checks[i].addEventListener("change", selectiveCheck);
-  
-  // for (let i = 0; i < checks.length; i++) checks[i].onchange = selectiveCheck;
-  
-  /*
-  const makeOrder = (flag) => {
-    log('make order = ', parseInt(flag.value));
-    let $s = flag.parentNode.querySelector("span");
-    console.log(flag.value);
-    console.log($s);
-    console.log(counted);
-    $s.textContent = flag.value;
-    $s.textContent = counted;
-  };
-  */
-  
-  /*
-  const clearOrder = (flag) => {
-    console.log(parseInt(flag.value));
-    let $s = flag.parentNode.querySelector("span");
-    console.log(flag.value);
-    log($s);
-    $s.textContent = '';
-  };
-  */
-  
-  
-  //===========================================================================
-  /*
-  let list = [];
-  document.querySelectorAll('input[name="mycheck"]').forEach(function (box) {
-    box.addEventListener("change", function (evt) {
-      let boxval = evt.target.value;
-      if (true === box.checked) {
-        list.push(boxval);
-      } else {
-        list = list.filter(function (val) {
-          return boxval !== val;
-        });
-      }
-      console.log(list);
-    });
-  });
-  */
-  
-  //========================================================================
-  
-  /*
-  function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
-  }
-  console.log(getRandomIntInclusive(1, 8));
-  */
-
-  //--------------------------------------------------------
-  
