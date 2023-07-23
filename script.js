@@ -66,7 +66,8 @@ const reuse = {
   },
   checkAnswer() {
     log('CHECKING ANSWER... ', checkedBoxes)
-    checkedBoxes.forEach(x => log(choices[x]))
+    // checkedBoxes.forEach(x => log(choices[x]))
+    checkedBoxes.forEach(x => log(x))
     // checkedBoxes.forEach(x => log(choices[x-1]))
   },
   checkChange(e) {
@@ -131,9 +132,9 @@ const createQuestion = (choices, maxAttempts, rand) => {
   $questionHead.innerHTML = questionHead;
   $Question.appendChild($questionHead);
   // Define Question Body
-  const questionBody = reuse.setSelector(null, 'div', 'questionBody', ['questionBody', 'd-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
+  const questionBody = reuse.setSelector(null, 'div', 'questionBody', ['d-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
   // Define Question List
-  const choicesList = reuse.setSelector(null, 'ul', 'choicesList', ['choicesList', "list-unstyled", 'd-grid', 'gap-2', 'flex-grow-1']);
+  const choicesList = reuse.setSelector(null, 'ul', 'choicesList', ['list-unstyled', 'd-grid', 'gap-2', 'flex-grow-1']);
   // Document Fragment
   const df = new DocumentFragment();
 
@@ -147,14 +148,14 @@ const createQuestion = (choices, maxAttempts, rand) => {
     // choiceItem.addEventListener('change', reuse.checkChange)
     
     // Create INPUT
-    let $input = reuse.setSelector(null, 'input', `choice-${choice.value}`, ["p-4", "form-check-input", "flex-shrink-1", "check"])
+    let $input = reuse.setSelector(null, 'input', `choice-${choice.value}`, ['p-4', 'form-check-input', 'flex-shrink-1', 'check'])
     $input.type = 'checkbox'
     // $input.value = `${choice.value}`
     $input.setAttribute('value', `${choice.value}`)
     $input.setAttribute('aria-label', "Checkbox for following text input")
     
-    $input.setAttribute("data-correct", `${choice.correct}`);
-    choice.order ? $input.setAttribute("data-order", `${choice.order}`) : "";
+    $input.setAttribute('data-correct', `${choice.correct}`);
+    choice.order ? $input.setAttribute('data-order', `${choice.order}`) : '';
     // $input.addEventListener('change', reuse.checkChange)
 
     choiceItem.appendChild($input)
@@ -182,8 +183,8 @@ const createQuestion = (choices, maxAttempts, rand) => {
   choicesList.addEventListener('change', reuse.checkChange)
   
   // Define SUBMIT BUTTON
-  $submit = reuse.setSelector(null, 'button', 'submit', ['submit', "btn", "btn-info", 'disabled']);
-  $submit.textContent = "SUBMIT";
+  $submit = reuse.setSelector(null, 'button', 'submit', ['btn', 'btn-info', 'disabled']);
+  $submit.textContent = 'SUBMIT';
   $submit.addEventListener('click', reuse.checkAnswer)
   choicesList.appendChild($submit);
   
