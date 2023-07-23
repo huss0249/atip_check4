@@ -142,7 +142,7 @@ const buildQuestion = (choices, rand) => {
   const $qHead = reuse.setObj(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
   const $qBody = reuse.setObj(null, 'div', 'qBody', ['d-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
   const $choices = reuse.setObj(null, 'ul', 'choices', ['list-unstyled', 'd-grid', 'gap-2', 'flex-grow-1']);
-  $submit = reuse.setObj(null, 'button', 'submit', ['btn', 'btn-info', 'disabled']);
+  $submit = reuse.setObj(null, 'button', 'submit', ['btn', 'btn-info', 'disabled', 'animated', 'fadeIn']);
   const $feedback = reuse.setObj(null, 'div', 'feedback', ['flex-grow-1']);
   const df = new DocumentFragment();
 
@@ -151,10 +151,10 @@ const buildQuestion = (choices, rand) => {
   choices.forEach((choice) => {
     // Create loop objects
     let $choice = reuse.setObj(null, 'li', null, ['bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
-    let $input = reuse.setObj(null, 'input', `choice-${choice.value}`, ['p-4', 'form-check-input', 'flex-shrink-1', 'check'])
+    let $input = reuse.setObj(null, 'input', `choice-${choice.value}`, ['p-4', 'form-check-input', 'flex-shrink-1', 'check', 'animated', 'fadeIn'])
     let $label = reuse.setObj(null, 'label', null, ['mx-2', 'bg-white', 'flex-grow-1'])
-    let $div = reuse.setObj(null, 'div', null, ['lbl', 'w-100'])
-    let $divNum = reuse.setObj(null, 'span', null, ['order', 'rounded-circle'])
+    let $div = reuse.setObj(null, 'div', null, ['lbl', 'w-100', 'animated', 'fadeIn'])
+    let $divNum = reuse.setObj(null, 'span', null, ['order', 'rounded-circle', 'animated', 'fadeIn'])
     
     // set Types
     $input.type = 'checkbox'
