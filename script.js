@@ -84,6 +84,42 @@ const reuse = {
     log('set check order => ', " | checked Boxes = ", boxes, ' | ', boxes.length);
 
     let $orders = document.querySelectorAll('.order')
+    let $inputs = document.querySelectorAll('input')
+    
+    // Reset Orders numbers first
+    $orders.forEach(($order, j) => $order.textContent = null)
+
+
+    boxes.forEach((box, i) => {
+      // log(box, ' | ', i + 1)
+
+      // $orders.forEach(($order) => {
+      //   log(box, ' | ', i + 1)
+      // })
+
+      /*
+      $inputs.forEach(($input, j) => {
+        if($input.value === box) {
+          // log('$input = ', $input.value)
+          // log('$orders [j] = ', $orders[j], ' | ', i + 1)
+          log('box => ', box, '$input = ', $input.value, ' | ', '$orders [j] = ', $orders[j], ' | ', i + 1)
+        }
+      })
+      */
+     
+      $orders.forEach(($order, j) => {
+        // $order.textContent = ''
+       if($inputs[j].value === box) {
+         log('box => ', box, '$inputs [j] = ', $inputs[j].value, ' | ', '$order = ', $order, ' | ', i + 1)
+         $order.textContent = i + 1
+       }
+     })
+
+
+    })
+    /* 
+    
+    let $orders = document.querySelectorAll('.order')
     // $orders.forEach($order => log($order.closest('li')))
     // $orders.forEach($order => log($order.parentElement))
     $orders.forEach($order => log($order.previousElementSibling.previousElementSibling.value))
@@ -92,6 +128,8 @@ const reuse = {
     // $orders.forEach($order => log($order.closest('li')))
     // $orders.forEach($order => log($order.parentElement))
     $items.forEach($item => log($item.querySelector('.lbl')))
+    
+    */
     
     
     orderedTarget.textContent = boxes.indexOf(inputTarget.value) + 1;
@@ -113,8 +151,8 @@ const reuse = {
   // get Checked box
   getChecked(e) {
     inputTarget = e.target.closest("input");
-    let targetParent = e.target.parentNode;
-    orderedTarget = targetParent.querySelector("span");
+    // let targetParent = e.target.parentNode;
+    // orderedTarget = targetParent.querySelector("span");
     
     inputTarget.checked ? boxes.push(inputTarget.value) : boxes = reuse.fltr(boxes, inputTarget);
     return reuse.setCheckOrder(boxes);
