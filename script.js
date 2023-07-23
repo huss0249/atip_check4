@@ -133,7 +133,8 @@ const reuse = {
         log('load incorrect feedback')
         $feedback.innerHTML = feedbacks.incorrect;
 
-        let $restart = document.createElement('button')
+        // let $restart = document.createElement('button')
+        let $restart = reuse.setObj(null, 'button', null, ['btn', 'btn-info', 'animated', 'fadeIn']);
         $restart.textContent = restartText
         $restart.addEventListener('click', reuse.restartQuestion)
         $feedback.appendChild($restart)
@@ -143,7 +144,8 @@ const reuse = {
         log('load failed feedback')
         $feedback.innerHTML = feedbacks.failed;
 
-        let $reset = document.createElement('button')
+        // let $reset = document.createElement('button')
+        let $reset = reuse.setObj(null, 'button', null, ['btn', 'btn-info', 'animated', 'fadeIn']);
         $reset.textContent = resetText
         $reset.addEventListener('click', reuse.resetQuestion)
         $feedback.appendChild($reset)
