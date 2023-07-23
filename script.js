@@ -31,9 +31,13 @@ let $inputs = '' // all inputs PlaceHolder
 let inputTarget = '' // Checked target input
 let orderedTarget = '' // Checked target order
 let $submit = '' // SUBMIT button
+let submitText = 'SUBMIT'
+let restartText = 'Try Again'
+let resetText = 'Start Over'
+let $feedback = '' // Feedback PlaceHolder
 const feedbacks = {
   correct: "Feedback 1",
-  incorrect1: "Feedback 2",
+  incorrect: "Feedback 2",
   failed: "Feedback 3",
 } // Feedback levels
 
@@ -69,11 +73,28 @@ const reuse = {
     return arr.sort(() => Math.random() - 0.5);
   },
 
+  restartQuestion() {
+    log('restarting question')
+    // log($inputs)
+    boxes = []
+    // attempts = 0;
+    // counter = 0;
+    $inputs.forEach($input => $input.checked = false)
+    $orders.forEach($order => $order.textContent = null)
+    $feedback.innerHTML = ''
+    // $Question.innerHTML = ''
+    // buildQuestion(choices, rand = true)
+  },
+  
   resetQuestion() {
     log('resetting question')
     // log($inputs)
+    boxes = []
+    attempts = 0;
+    counter = 0;
     $inputs.forEach($input => $input.checked = false)
     $orders.forEach($order => $order.textContent = null)
+    $feedback.innerHTML = ''
     $Question.innerHTML = ''
     buildQuestion(choices, rand = true)
   },
@@ -103,14 +124,32 @@ const reuse = {
     log('counter = ', counter)
     if(counter === maxChck) {
       log('load correct feedback')
+      $feedback.innerHTML = feedbacks.correct;
+      $submit.classList.add('disabled', 'opacity-25')
+      // document.getElementById('choices').removeEventListener('change', reuse.getChecked)
+      document.querySelectorAll('input').forEach(i => i.setAttribute("disabled","disabled"))
     } else {
       if(attempts < maxAttempts) {
         log('load incorrect feedback')
+        $feedback.innerHTML = feedbacks.incorrect;
+
+        let $restart = document.createElement('button')
+        $restart.textContent = restartText
+        $restart.addEventListener('click', reuse.restartQuestion)
+        $feedback.appendChild($restart)
+        
         attempts++
       } else {
         log('load failed feedback')
+        $feedback.innerHTML = feedbacks.failed;
+
+        let $reset = document.createElement('button')
+        $reset.textContent = resetText
+        $reset.addEventListener('click', reuse.resetQuestion)
+        $feedback.appendChild($reset)
+
         // attempts++
-        reuse.resetQuestion()
+        // reuse.resetQuestion()
       }
     }
 
@@ -163,7 +202,7 @@ const buildQuestion = (choices, rand) => {
   const $qBody = reuse.setObj(null, 'div', 'qBody', ['d-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
   const $choices = reuse.setObj(null, 'ul', 'choices', ['list-unstyled', 'd-grid', 'gap-2', 'flex-grow-1']);
   $submit = reuse.setObj(null, 'button', 'submit', ['btn', 'btn-info', 'disabled', 'opacity-25', 'animated', 'fadeIn']);
-  const $feedback = reuse.setObj(null, 'div', 'feedback', ['flex-grow-1']);
+  $feedback = reuse.setObj(null, 'div', 'feedback', ['flex-grow-1']);
   const df = new DocumentFragment();
 
   
@@ -203,8 +242,9 @@ const buildQuestion = (choices, rand) => {
 
   // Fill Objects
   $qHead.innerHTML = qHead;
-  $submit.textContent = 'SUBMIT';
-  $feedback.textContent = 'FEEDBACK HERE'
+  $submit.textContent = submitText;
+  // $feedback.textContent = 'FEEDBACK HERE'
+  $feedback.innerHTML = ''
 
   // Append objects to DOM elements
   $Question.appendChild($qHead);
