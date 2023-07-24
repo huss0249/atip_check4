@@ -234,11 +234,13 @@ const buildQuestion = (choices, rand) => {
 
   // Create Objects
   // $Question = reuse.setObj("#q", null, null, ['d-flex', 'flex-column', 'p-3', 'fs-4']);
-  $Question = reuse.setObj("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
+  // $Question = reuse.setObj("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
+  $Question = reuse.setObj("#q", null, null, ['d-flex', 'flex-column', 'p-0']);
   // const $qHead = reuse.setObj(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
-  const $qHead = reuse.setObj(null, 'p', 'qHead', ['p-3']);
+  const $qHead = reuse.setObj(null, 'div', 'qHead', ['p-0']);
   // const $qBody = reuse.setObj(null, 'div', 'qBody', ['d-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
-  const $qBody = reuse.setObj(null, 'div', 'qBody', ['d-flex', 'flex-row', 'gap-2', 'p-3']);
+  // const $qBody = reuse.setObj(null, 'div', 'qBody', ['d-flex', 'flex-row', 'gap-2', 'p-3']);
+  const $qBody = reuse.setObj(null, 'div', 'qBody', ['d-flex', 'flex-row', 'gap-2', 'p-0']);
   const $choices = reuse.setObj(null, 'ul', 'choices', ['list-unstyled', 'd-grid', 'gap-2', 'flex-grow-1']);
   $submit = reuse.setObj(null, 'button', 'submit', ['btn', 'btn-lg', 'btn-info', 'disabled', 'opacity-25', 'animated', 'fadeIn']);
   $feedback = reuse.setObj(null, 'div', 'feedback', ['flex-grow-1']);
@@ -250,12 +252,14 @@ const buildQuestion = (choices, rand) => {
     // Create loop objects
     // let $choice = reuse.setObj(null, 'li', null, ['choice', 'bg-warning', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
     let $choice = reuse.setObj(null, 'li', null, ['choice', 'd-flex', 'flex-row', 'gap-1', 'justify-content-between']);
-    let $input = reuse.setObj(null, 'input', `choice-${choice.value}`, ['p-4', 'form-check-input', 'flex-shrink-1', 'check', 'animated', 'fadeIn'])
+    // let $input = reuse.setObj(null, 'input', `choice-${choice.value}`, ['p-2', 'form-check-input', 'flex-shrink-1', 'check', 'animated', 'fadeIn'])
+    let $input = reuse.setObj(null, 'input', `choice-${choice.value}`, ['p-0', 'form-check-input', 'flex-shrink-1', 'check', 'animated', 'fadeIn'])
     // let $label = reuse.setObj(null, 'label', null, ['mx-2', 'bg-white', 'flex-grow-1'])
     let $label = reuse.setObj(null, 'label', null, ['mx-2', 'flex-grow-1'])
     let $div = reuse.setObj(null, 'div', null, ['lbl', 'w-100', 'animated', 'fadeIn'])
     // let $divNum = reuse.setObj(null, 'span', null, ['order', 'm-2', 'fs-4', 'p-3', 'rounded-circle', 'opacity-0', 'animated', 'fadeIn'])
-    let $divNum = reuse.setObj(null, 'span', null, ['order', 'm-2', 'p-3', 'rounded-circle', 'opacity-0', 'animated', 'fadeIn'])
+    // let $divNum = reuse.setObj(null, 'span', null, ['order', 'm-2', 'p-3', 'rounded-circle', 'opacity-0', 'animated', 'fadeIn'])
+    let $divNum = reuse.setObj(null, 'span', null, ['order', 'm-2', 'p-0', 'rounded-circle', 'opacity-0', 'animated', 'fadeIn'])
     
     // set Types
     $input.type = 'checkbox'
@@ -273,9 +277,9 @@ const buildQuestion = (choices, rand) => {
     
     // Append to parent objects
     $label.appendChild($div)
-    $choice.appendChild($divNum)
     $choice.appendChild($input)
     $choice.appendChild($label)
+    $choice.appendChild($divNum)
     
     df.appendChild($choice);
   });
