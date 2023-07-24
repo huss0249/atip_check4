@@ -261,7 +261,8 @@ const buildQuestion = (choices, rand) => {
     $input.type = 'checkbox'
     
     // fill Objects
-    $div.textContent = `${choice.choice}`
+    // $div.textContent = `${choice.choice}`
+    $div.innerHTML = `${choice.choice}`
 
     // Ste Attributes
     $input.setAttribute('value', `${choice.value}`)
