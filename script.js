@@ -7,15 +7,63 @@ __________________________________________________________
 */
 // Question
 const qHead = "<h2>Wrong Emai</h2><p>You are a manager and you have received a grievance email from your employee, John Smith, concerning overtime working hours. As part of your responsibility, you forward the email to your manager and to your labour relations officer, and you cc the employee. After sending the email, you realize that you sent it by mistake to Jane Smith and not John Smith.</p><p><strong>What are the steps you would take?</strong></p><p class='instructions'>Select 4 actions and place them in the correct order.</p>"
+
+/* 
+
+
+
+
+
+
+
+
+
+*/
 const choices = [
-  { choice: "Question A", value: 1, correct: true, order: 1 },
-  { choice: "Question B", value: 2, correct: true, order: 2 },
-  { choice: "Question C", value: 3, correct: true, order: 3 },
-  { choice: "Question D", value: 4, correct: true, order: 4 },
-  { choice: "Question E", value: 5, correct: false },
-  { choice: "Question F", value: 6, correct: false },
-  { choice: "Question G", value: 7, correct: false },
-  { choice: "Question H", value: 8, correct: false }
+  { 
+    choice: "Recall the email and delete unread copies of the message",
+    value: 1,
+    correct: true,
+    order: 1
+  },
+  {
+    choice: `If not successful in recalling, advise the recipient to <a href='https://collaboration-corpsec.forces.mil.ca/sites/DAIP/PIM%20documents%20%20Documents%20IRVP/English/How%20to%20Triple-Delete%20D365.docx?d=w7794ab92885149e0b3edb21fb86a3370&csf=1&e=g5O9BP' target='_blank'>triple</a> delete the email`,
+    value: 2,
+    correct: true,
+    order: 2
+  },
+  {
+    choice: "Report a breach incident to DAIP",
+    value: 3,
+    correct: true,
+    order: 3
+  },
+  {
+    choice: "Forward the email to the correct person",
+    value: 4,
+    correct: true,
+    order: 4
+  },
+  {
+    choice: "Ask Jane to forward the email to John Smith for you",
+    value: 5,
+    correct: false
+  },
+  {
+    choice: "If not successful in recalling, delete sent message from your folder",
+    value: 6,
+    correct: false
+  },
+  {
+    choice: "Recall the email and send an apology to Jane",
+    value: 7,
+    correct: false
+  },
+  {
+    choice: "No need to report as you handled the breach according to SOPs",
+    value: 8,
+    correct: false
+  }
 ];
 
 let $Question = ''
@@ -39,7 +87,7 @@ const feedbacks = {
   correct: `<p>Correct! By recalling and deleting the message, you are mitigating the risk of exposure as quickly as possible. However, if an exposure has occurred, you want to reduce any further impact by informing those involved and by taking appropriate actions to retrieve and/or delete the information. Because there was an incident, you should inform DAIP.</p>
   <p>Lastly, you should continue with your responsibilities to your employee and send the email to the right person.</p>`,
 
-  incorrect: `Feedback 2`,
+  incorrect: `<p>Incorrect. Try again.</p>`,
   
   failed: `
   <p>Incorrect. The correct response is:</p>
