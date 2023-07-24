@@ -195,7 +195,8 @@ const buildQuestion = (choices, rand) => {
   rand ? reuse.shuffle(choices) : ''
 
   // Create Objects
-  $Question = reuse.setObj("#q", null, null, ['d-flex', 'flex-column', 'p-3', 'fs-4']);
+  // $Question = reuse.setObj("#q", null, null, ['d-flex', 'flex-column', 'p-3', 'fs-4']);
+  $Question = reuse.setObj("#q", null, null, ['d-flex', 'flex-column', 'p-3']);
   // const $qHead = reuse.setObj(null, 'p', 'qHead', ['bg-dark', 'text-light', 'p-3']);
   const $qHead = reuse.setObj(null, 'p', 'qHead', ['p-3']);
   // const $qBody = reuse.setObj(null, 'div', 'qBody', ['d-flex', 'flex-row', 'gap-2', 'p-3', 'bg-secondary']);
@@ -215,7 +216,8 @@ const buildQuestion = (choices, rand) => {
     // let $label = reuse.setObj(null, 'label', null, ['mx-2', 'bg-white', 'flex-grow-1'])
     let $label = reuse.setObj(null, 'label', null, ['mx-2', 'flex-grow-1'])
     let $div = reuse.setObj(null, 'div', null, ['lbl', 'w-100', 'animated', 'fadeIn'])
-    let $divNum = reuse.setObj(null, 'span', null, ['order', 'm-2', 'fs-4', 'p-3', 'rounded-circle', 'opacity-0', 'animated', 'fadeIn'])
+    // let $divNum = reuse.setObj(null, 'span', null, ['order', 'm-2', 'fs-4', 'p-3', 'rounded-circle', 'opacity-0', 'animated', 'fadeIn'])
+    let $divNum = reuse.setObj(null, 'span', null, ['order', 'm-2', 'p-3', 'rounded-circle', 'opacity-0', 'animated', 'fadeIn'])
     
     // set Types
     $input.type = 'checkbox'
