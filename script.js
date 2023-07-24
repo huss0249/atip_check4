@@ -6,7 +6,7 @@ DEFENE
 __________________________________________________________
 */
 // Question
-const qHead = 'This is the Question Head where the description and instructions of the question will set.<br />Here is a <a href="#">LINK</a> :<br />Question text can be broken into multiple lines.'
+const qHead = "<h2>Wrong Emai</h2><p>You are a manager and you have received a grievance email from your employee, John Smith, concerning overtime working hours. As part of your responsibility, you forward the email to your manager and to your labour relations officer, and you cc the employee. After sending the email, you realize that you sent it by mistake to Jane Smith and not John Smith.</p><p><strong>What are the steps you would take?</strong></p><p class='instructions'>Select 4 actions and place them in the correct order.</p>"
 const choices = [
   { choice: "Question A", value: 1, correct: true, order: 1 },
   { choice: "Question B", value: 2, correct: true, order: 2 },
@@ -36,9 +36,20 @@ let restartText = 'Try Again'
 let resetText = 'Start Over'
 let $feedback = '' // Feedback PlaceHolder
 const feedbacks = {
-  correct: "Feedback 1",
-  incorrect: "Feedback 2",
-  failed: "Feedback 3",
+  correct: `<p>Correct! By recalling and deleting the message, you are mitigating the risk of exposure as quickly as possible. However, if an exposure has occurred, you want to reduce any further impact by informing those involved and by taking appropriate actions to retrieve and/or delete the information. Because there was an incident, you should inform DAIP.</p>
+  <p>Lastly, you should continue with your responsibilities to your employee and send the email to the right person.</p>`,
+
+  incorrect: `Feedback 2`,
+  
+  failed: `
+  <p>Incorrect. The correct response is:</p>
+  <ol>
+  <li>1.	Recall the email and delete unread copies of the message</li>
+  <li>2.	If not successful in recalling, advise recipient to triple delete the email</li>
+  <li>3.	Report a breach incident to DAIP</li>
+  <li>4.	Forward the email to the correct person</li>
+  </ol>
+  <p>By recalling and deleting the message, you are mitigating the risk of exposure as quickly as possible. However, if an exposure has occurred, you want to reduce any further impact by informing those involved and by taking appropriate actions to retrieve and/or delete the information. Because there was an incident, you should inform DAIP. Lastly, you should continue with your responsibilities to your employee and send the email to the right person.</p>`,
 } // Feedback levels
 
 /*
