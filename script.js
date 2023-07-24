@@ -6,7 +6,7 @@ DEFENE
 __________________________________________________________
 */
 // Question
-const qHead = "<h2>Wrong Emai</h2><p>You are a manager and you have received a grievance email from your employee, John Smith, concerning overtime working hours. As part of your responsibility, you forward the email to your manager and to your labour relations officer, and you cc the employee. After sending the email, you realize that you sent it by mistake to Jane Smith and not John Smith.</p><p><strong>What are the steps you would take?</strong></p><p class='instructions'>Select 4 actions and place them in the correct order.</p>"
+const qHead = "<h2>Wrong Email</h2><p>You are a manager and you have received a grievance email from your employee, John Smith, concerning overtime working hours. As part of your responsibility, you forward the email to your manager and to your labour relations officer, and you cc the employee. After sending the email, you realize that you sent it by mistake to Jane Smith and not John Smith.</p><p><strong>What are the steps you would take?</strong></p><p class='instructions'>Select 4 actions and place them in the correct order.</p>"
 
 const choices = [
   { 
