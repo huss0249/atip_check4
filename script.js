@@ -76,13 +76,13 @@ let resetText = "Start Over";
 let $feedback = ""; // Feedback PlaceHolder
 
 const feedbacks = {
-  correct: `<p>Correct! By recalling and deleting the message, you are mitigating the risk of exposure as quickly as possible. However, if an exposure has occurred, you want to reduce any further impact by informing those involved and by taking appropriate actions to retrieve and/or delete the information. Because there was an incident, you should inform DAIP.</p>
+  correct: `<h2>Correct!</h2><p>By recalling and deleting the message, you are mitigating the risk of exposure as quickly as possible. However, if an exposure has occurred, you want to reduce any further impact by informing those involved and by taking appropriate actions to retrieve and/or delete the information. Because there was an incident, you should inform DAIP.</p>
   <p>Lastly, you should continue with your responsibilities to your employee and send the email to the right person.</p>`,
 
-  incorrect: `<p>Incorrect. Try again.</p>`,
+  incorrect: `<h2>Incorrect.</h2><p>Try again.</p>`,
 
   failed: `
-  <p>Incorrect. The correct response is:</p>
+  <h2>Incorrect.</h2><p>The correct response is:</p>
   <ol>
   <li>Recall the email and delete unread copies of the message</li>
   <li>If not successful in recalling, advise recipient to <a href='https://collaboration-corpsec.forces.mil.ca/sites/DAIP/PIM%20documents%20%20Documents%20IRVP/English/How%20to%20Triple-Delete%20D365.docx?d=w7794ab92885149e0b3edb21fb86a3370&csf=1&e=g5O9BP' target='_blank'>triple</a> delete the email</li>
@@ -185,7 +185,11 @@ const reuse = {
 
         let $restart = reuse.setObj(null, "button", null, [
           "btn",
-          "btn-info",
+          "btn-primary",
+
+          "rounded-0",
+          "mt-3",
+          "p-3",
           "animated",
           "fadeIn"
         ]);
@@ -201,7 +205,10 @@ const reuse = {
 
         let $reset = reuse.setObj(null, "button", null, [
           "btn",
-          "btn-info",
+          "btn-primary",
+          "rounded-0",
+          "mt-3",
+          "p-3",
           "animated",
           "fadeIn"
         ]);
@@ -259,19 +266,57 @@ const buildQuestion = (choices, rand) => {
     "d-flex",
     "flex-column",
     "position-relative",
-    "p-3",
-    "bg-white"
+    // "overflow-y-hidden",
+
+    // "border",
+    // "border-1",
+    // "border-primary",
+    // "w-auto",
+    // "row",
+    "p-3"
+    // "bg-white"
   ]);
   const $qHead = reuse.setObj(null, "div", "qHead", ["mb-2"]);
   const $qBody = reuse.setObj(null, "div", "qBody", [
     "d-flex",
-    "flex-row"]);
+    "flex-row",
+    // "flex-fill",
+    "d-grid",
+
+    // "border",
+    // "border-1",
+    // "border-primary",
+
+    // "bg-warning",
+    "w-100",
+    // "w-auto",
+    "col"
+  ]);
   const $choices = reuse.setObj(null, "ul", "choices", [
-    "list-unstyled"]);
+    "list-unstyled",
+    "my-0",
+    "d-grid",
+    "container",
+    "m-0",
+    "p-0"
+  ]);
+  // $choices.style.width = "60%";
+
+  // $submitContainer = reuse.setObj(null, "div", null, ["d-grid"]);
+
   $submit = reuse.setObj(null, "button", "submit", [
     "btn",
-    "btn-lg",
-    "btn-info",
+    "btn-primary",
+    // "justify-self-end",
+    // "btn-lg",
+    "rounded-0",
+    "mt-3",
+    "p-3",
+    // "mx-4",
+    // "border",
+    // "border-1",
+    // "border-primary",
+
     "disabled",
     "opacity-25",
     "animated",
@@ -279,20 +324,40 @@ const buildQuestion = (choices, rand) => {
   ]);
   // $feedback = reuse.setObj(null, "div", "feedback", ["col"]);
   $feedback = reuse.setObj(null, "div", "feedback", [
+    "d-flex",
+    "flex-column",
+    // "justify-content-start",
+    "justify-content-center",
+    // "align-items-center",
+    "align-items-stretch",
+    // "h-auto",
+    // "overflow-y-auto",
+
     "z-1",
-    "w-50",
-    "h-50",
-    "row",
+    "w-100",
+    // "w-auto",
+    "h-100",
+    // "row",
     "position-absolute",
     "top-50",
     "start-50",
     "translate-middle",
+    // "p-3",
     "p-5",
-    "rounded-5",
+    // "my-5",
+    "ms-0",
+    "me-0",
+    // "rounded-5",
     "visually-hidden",
-    "bg-light",
+    "bg-light"
+    // "align-self-start",
+    // "border",
+    // "border-1",
+    // "border-primary",
+    // "bg-primary",
+    // "col"
 
-    "shadow"
+    // "shadow"
   ]);
 
   const df = new DocumentFragment();
@@ -308,59 +373,84 @@ const buildQuestion = (choices, rand) => {
       "align-items-stretch",
       "flex-nowrap",
       // "d-inline-flex",
-      "mb-2",
+      "mb-1",
       "rounded-1",
       "choice",
-      "p-2",
-      // 'bg-warning'
+      // "p-2",
+      "p-1"
+
+      // "border",
+      // "border-1",
+      // "border-primary"
     ]);
-    
+
     let $inputGroup = reuse.setObj(null, "div", null, [
       "input-group-text",
       "align-self-center",
       "rounded-0",
       "bg-transparent",
-      
+
+      // "border",
       "border-0",
-      "ps-0",
+      "ps-0"
       // "pe-3"
     ]);
-    
+
     let $input = reuse.setObj(null, "input", `choice-${choice.value}`, [
       "form-check-input",
       "check",
-      "mt-auto",
-      "p-3",
+      // "mt-auto",
+      "mt-0",
+      // "p-1",
       "animated",
-      "rounded-circle",
-      "border-4",
-      "border-info",
+      // "rounded-circle",
+
+      // "border",
+      // "border-1",
+      // "border-primary",
+
       // "bg-info",
       "fadeIn"
     ]);
-    
-    let $label = reuse.setObj(null, "label", null, ["align-self-start", "flex-fill", "mt-2", "pe-2"]);
-    
+
+    let $label = reuse.setObj(null, "label", null, [
+      "align-self-start",
+      "flex-fill",
+      "mt-1",
+      "pe-2"
+
+      // "border",
+      // "border-1",
+      // "border-primary"
+    ]);
+
     let $div = reuse.setObj(null, "span", null, [
       "lbl",
       // "w-100",
       "animated",
       "fadeIn"
+      // "border",
+      // "border-2",
+      // "border-danger"
     ]);
-    
+
     let $divNum = reuse.setObj(null, "span", null, [
       "align-self-center",
       "order",
       "badge",
-      "text-bg-info",
+      "text-bg-primary",
 
       "mt-0",
       "ms-auto",
       "me-0",
-      
-      "fs-5",
-      "fw-semibold",
-      
+
+      // "fs-6",
+      "fw-medium",
+
+      "border",
+      "border-1",
+      "border-primary",
+
       // "border-4",
       // "border-info",
       "text-white",
@@ -372,7 +462,7 @@ const buildQuestion = (choices, rand) => {
 
     // set Types
     $input.type = "checkbox";
-    
+
     // fill Objects
     $div.innerHTML = `${choice.choice}`;
 
@@ -386,12 +476,12 @@ const buildQuestion = (choices, rand) => {
     // Append to parent objects
     $label.appendChild($div);
 
-    // $choice.appendChild($input)    
+    // $choice.appendChild($input)
     $inputGroup.appendChild($input);
     $choice.appendChild($inputGroup);
-    
+
     $choice.appendChild($label);
-    
+
     $choice.appendChild($divNum);
 
     df.appendChild($choice);
@@ -405,7 +495,11 @@ const buildQuestion = (choices, rand) => {
   // Append objects to DOM elements
   $Question.appendChild($qHead);
   $choices.appendChild(df);
+
   $choices.appendChild($submit);
+  // $submitContainer.appendChild($submit);
+  // $choices.appendChild($submitContainer);
+
   $qBody.appendChild($choices);
   // $qBody.appendChild($feedback);
   $Question.appendChild($qBody);
