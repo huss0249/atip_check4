@@ -1,4 +1,7 @@
 const log = console.log;
+const warn = console.warn;
+const logGrp = console.group;
+const logGrpE = console.groupEnd;
 /*
 __________________________________________________________
 
@@ -157,66 +160,70 @@ const reuse = {
     buildQuestion(choices, (rand = true));
   },
 
+  // Incorrect feedback
+  incorrectFeedback() {
+    if (attempts < maxAttempts) {
+      // log('load incorrect feedback')
+      $feedback.classList.remove("visually-hidden");
+      $feedback.innerHTML = feedbacks.incorrect;
+
+      let $restart = reuse.setObj(null, "button", null, [
+        "btn",
+        "btn-primary",
+        "rounded-0",
+        "mt-3",
+        "p-3",
+        "animated",
+        "fadeIn"
+      ]);
+      $restart.textContent = restartText;
+      $restart.addEventListener("click", reuse.restartQuestion);
+      $feedback.appendChild($restart);
+
+      attempts++;
+    } else {
+      // log('load failed feedback')
+      $feedback.classList.remove("visually-hidden");
+      $feedback.innerHTML = feedbacks.failed;
+
+      let $reset = reuse.setObj(null, "button", null, [
+        "btn",
+        "btn-primary",
+        "rounded-0",
+        "mt-3",
+        "p-3",
+        "animated",
+        "fadeIn"
+      ]);
+      $reset.textContent = resetText;
+      $reset.addEventListener("click", reuse.resetQuestion);
+      $feedback.appendChild($reset);
+    }
+
+  },
+
+  // Correct feedback
+  correctFeedback() {
+    $feedback.classList.remove("visually-hidden");
+    $feedback.innerHTML = feedbacks.correct;
+    $submit.classList.add("disabled", "opacity-25");
+    document
+      .querySelectorAll("input")
+      .forEach((i) => i.setAttribute("disabled", "disabled"));
+
+  },
+
   // Check Answer
   checkAnswer() {
     counter = 0;
     boxes.forEach((box, i) => {
       $orders.forEach(($order, j) => {
-        if ($inputs[j].dataset.order === box) {
-          // log('box => ', box, '$inputs [j] = ', $inputs[j].dataset.order, ' | ', '$order = ', $order, ' | ', i + 1)
-          counter++;
-        }
+        // if ($inputs[j].dataset.order === box) {
+        $inputs[j].dataset.order === box && box === (i + 1).toString() ? counter++ : "";
       });
     });
-    // log('counter = ', counter)
-    if (counter === maxChck) {
-      // log('load correct feedback')
-      $feedback.classList.remove("visually-hidden");
-      $feedback.innerHTML = feedbacks.correct;
-      $submit.classList.add("disabled", "opacity-25");
-      document
-        .querySelectorAll("input")
-        .forEach((i) => i.setAttribute("disabled", "disabled"));
-    } else {
-      if (attempts < maxAttempts) {
-        // log('load incorrect feedback')
-        $feedback.classList.remove("visually-hidden");
-        $feedback.innerHTML = feedbacks.incorrect;
-
-        let $restart = reuse.setObj(null, "button", null, [
-          "btn",
-          "btn-primary",
-
-          "rounded-0",
-          "mt-3",
-          "p-3",
-          "animated",
-          "fadeIn"
-        ]);
-        $restart.textContent = restartText;
-        $restart.addEventListener("click", reuse.restartQuestion);
-        $feedback.appendChild($restart);
-
-        attempts++;
-      } else {
-        // log('load failed feedback')
-        $feedback.classList.remove("visually-hidden");
-        $feedback.innerHTML = feedbacks.failed;
-
-        let $reset = reuse.setObj(null, "button", null, [
-          "btn",
-          "btn-primary",
-          "rounded-0",
-          "mt-3",
-          "p-3",
-          "animated",
-          "fadeIn"
-        ]);
-        $reset.textContent = resetText;
-        $reset.addEventListener("click", reuse.resetQuestion);
-        $feedback.appendChild($reset);
-      }
-    }
+    
+    counter === maxChck ? reuse.correctFeedback() : reuse.incorrectFeedback();
     return;
   },
 
@@ -266,30 +273,14 @@ const buildQuestion = (choices, rand) => {
     "d-flex",
     "flex-column",
     "position-relative",
-    // "overflow-y-hidden",
-
-    // "border",
-    // "border-1",
-    // "border-primary",
-    // "w-auto",
-    // "row",
     "p-3"
-    // "bg-white"
   ]);
   const $qHead = reuse.setObj(null, "div", "qHead", ["mb-2"]);
   const $qBody = reuse.setObj(null, "div", "qBody", [
     "d-flex",
     "flex-row",
-    // "flex-fill",
     "d-grid",
-
-    // "border",
-    // "border-1",
-    // "border-primary",
-
-    // "bg-warning",
     "w-100",
-    // "w-auto",
     "col"
   ]);
   const $choices = reuse.setObj(null, "ul", "choices", [
@@ -300,64 +291,35 @@ const buildQuestion = (choices, rand) => {
     "m-0",
     "p-0"
   ]);
-  // $choices.style.width = "60%";
-
-  // $submitContainer = reuse.setObj(null, "div", null, ["d-grid"]);
 
   $submit = reuse.setObj(null, "button", "submit", [
     "btn",
     "btn-primary",
-    // "justify-self-end",
-    // "btn-lg",
     "rounded-0",
     "mt-3",
     "p-3",
-    // "mx-4",
-    // "border",
-    // "border-1",
-    // "border-primary",
-
     "disabled",
     "opacity-25",
     "animated",
     "fadeIn"
   ]);
-  // $feedback = reuse.setObj(null, "div", "feedback", ["col"]);
   $feedback = reuse.setObj(null, "div", "feedback", [
     "d-flex",
     "flex-column",
-    // "justify-content-start",
     "justify-content-center",
-    // "align-items-center",
     "align-items-stretch",
-    // "h-auto",
-    // "overflow-y-auto",
-
     "z-1",
     "w-100",
-    // "w-auto",
     "h-100",
-    // "row",
     "position-absolute",
     "top-50",
     "start-50",
     "translate-middle",
-    // "p-3",
     "p-5",
-    // "my-5",
     "ms-0",
     "me-0",
-    // "rounded-5",
     "visually-hidden",
     "bg-light"
-    // "align-self-start",
-    // "border",
-    // "border-1",
-    // "border-primary",
-    // "bg-primary",
-    // "col"
-
-    // "shadow"
   ]);
 
   const df = new DocumentFragment();
@@ -372,16 +334,10 @@ const buildQuestion = (choices, rand) => {
       "justify-content-start",
       "align-items-stretch",
       "flex-nowrap",
-      // "d-inline-flex",
       "mb-1",
       "rounded-1",
       "choice",
-      // "p-2",
       "p-1"
-
-      // "border",
-      // "border-1",
-      // "border-primary"
     ]);
 
     let $inputGroup = reuse.setObj(null, "div", null, [
@@ -389,27 +345,15 @@ const buildQuestion = (choices, rand) => {
       "align-self-center",
       "rounded-0",
       "bg-transparent",
-
-      // "border",
       "border-0",
       "ps-0"
-      // "pe-3"
     ]);
 
     let $input = reuse.setObj(null, "input", `choice-${choice.value}`, [
       "form-check-input",
       "check",
-      // "mt-auto",
       "mt-0",
-      // "p-1",
       "animated",
-      // "rounded-circle",
-
-      // "border",
-      // "border-1",
-      // "border-primary",
-
-      // "bg-info",
       "fadeIn"
     ]);
 
@@ -418,20 +362,12 @@ const buildQuestion = (choices, rand) => {
       "flex-fill",
       "mt-1",
       "pe-2"
-
-      // "border",
-      // "border-1",
-      // "border-primary"
     ]);
 
     let $div = reuse.setObj(null, "span", null, [
       "lbl",
-      // "w-100",
       "animated",
       "fadeIn"
-      // "border",
-      // "border-2",
-      // "border-danger"
     ]);
 
     let $divNum = reuse.setObj(null, "span", null, [
@@ -439,20 +375,13 @@ const buildQuestion = (choices, rand) => {
       "order",
       "badge",
       "text-bg-primary",
-
       "mt-0",
       "ms-auto",
       "me-0",
-
-      // "fs-6",
       "fw-medium",
-
       "border",
       "border-1",
       "border-primary",
-
-      // "border-4",
-      // "border-info",
       "text-white",
       "rounded-circle",
       "opacity-0",
@@ -496,12 +425,9 @@ const buildQuestion = (choices, rand) => {
   $Question.appendChild($qHead);
   $choices.appendChild(df);
 
-  $choices.appendChild($submit);
-  // $submitContainer.appendChild($submit);
-  // $choices.appendChild($submitContainer);
-
+  $choices.appendChild($submit);  
   $qBody.appendChild($choices);
-  // $qBody.appendChild($feedback);
+
   $Question.appendChild($qBody);
   $Question.appendChild($feedback);
 
